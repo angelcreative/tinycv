@@ -4,3 +4,4 @@ PyPDF2
 python-dotenv
 requests
 bcrypt
+openai==0.10.2
