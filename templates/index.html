@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Your head content here (e.g., title, meta, CSS links) -->
+<link rel="stylesheet" type="text/css" href="../static/styles.css">
+</head>
+<body>
+    <div class="headerApp">
+    <h1 class="header">TinyCV<br><span>The Smallest CV You'll Ever Need</span></h1>
+   
+        <div class="headerArrow"></div>
+</div>
+  
+   <article class="renderCV">
+    <section class="renderCVLeft">
+    
+  
+
+    <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" id="file" style="visibility: hidden; height:1px;">
+  <div id="uploadButton" class="upload-btn">Upload your resume <span class="arrowUp">↑</span></div>
+        <p id="fileLoadedMessage" style="display:none;"></p>
+
+    <button type="submit">Make my TinyCV! ✨ </button>
+        <p class="motto">Craft a tiny, yet beautiful resume faster than ever. Upload your PDF, and get a streamlined, shareable version in no time.</p> 
+</form>
+    
+
+        
+        
+    </section>
+   
+    <section class="renderCVright">
+        
+      <div id="summaryCard" style="display:none;">
+        
+       
+</div>
+<button id="copyButton" style="display:none;">Copy Summary</button>
+<button id="clearSummaryButton" style="display:none;">Clear summary <img class="clearIcon" src="../static/img/broom.svg"></button>
+
+<img id="loader" src="../static/img/loader.svg" style="display: none;" alt="Loading..."/>
+
+
+
+    </section>
+ </article> 
+    
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#uploadForm').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            // Show the loader and file loaded message
+            $('#loader').show();
+            $('#fileLoadedMessage').text($('#file')[0].files[0].name + ' loaded').show();
+
+            $.ajax({
+                url: '/upload',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    // Hide the loader
+                    $('#loader').hide();
+
+                    // Insert the HTML summary into the 'summaryCard' div
+                    $('#summaryCard').html(response.html_summary);
+                    $('#summaryCard').show();
+
+                    // Show the copy and clear summary buttons
+                    $('#copyButton').show();
+                    $('#clearSummaryButton').show(); // Show the clear summary button
+                },
+                error: function() {
+                    // Hide the loader in case of error
+                    $('#loader').hide();
+                    alert('Error processing file.');
+                }
+            });
+        });
+
+        // Custom upload button functionality
+        $('#uploadButton').click(function() {
+            $('#file').click();
+        });
+
+        $('#file').change(function() {
+            if(this.files && this.files.length > 0) {
+                $('#fileLoadedMessage').text(this.files[0].name + ' loaded').show();
+            }
+        });
+
+        // Copy button functionality
+        $('#copyButton').click(function() {
+            var textToCopy = $('#summaryCard').text();
+            var tempElement = $("<textarea>");
+            $("body").append(tempElement);
+            tempElement.val(textToCopy).select();
+            document.execCommand("copy");
+            tempElement.remove();
+            alert('Summary copied to clipboard!');
+        });
+
+        // Clear summary button functionality
+        // Clear summary button functionality
+        $('#clearSummaryButton').click(function() {
+            $('#summaryCard').empty().hide(); // Clear and hide the summary
+            $('#copyButton').hide(); // Hide the copy summary button
+            $(this).hide(); // Hide the clear summary button
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

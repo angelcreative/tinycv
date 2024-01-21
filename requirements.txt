@@ -1,0 +1,6 @@
+Flask
+flask_cors
+PyPDF2
+python-dotenv
+requests
+bcrypt
