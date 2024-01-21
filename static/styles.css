@@ -232,16 +232,18 @@ p.motto {
 }
 
 .warntime {
+    max-width: 360px;
     margin: 0 auto;
     text-align: center;
-    padding: 20px 30px;
+    padding: 0;
     font-size: 12px;
 }
 
 .credits {
     font-size: 12px;
+    margin: 0 auto;
+    text-align: center;
 }
-
 .credits a {
     color: #7e9bff;
     text-decoration: none;
