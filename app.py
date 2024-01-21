@@ -14,16 +14,18 @@ import re
 from io import BytesIO
 from dotenv import load_dotenv
 load_dotenv()  # This loads the environment variables from the .env file
-import openai
+from openai import OpenAI
+openai_api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=openai_api_key)
+
+
 
 app = Flask(__name__)
 CORS(app)
 
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Max file size: 16 MB
 
-# Initialize OpenAI client with your API key
-openai_api_key = os.getenv("OPENAI_API_KEY")
-client = openai.api_key = openai_api_key
+
 
 def extract_text_from_pdf(file):
     with BytesIO() as temp_buffer:
@@ -53,14 +55,15 @@ print(cleaned_text)
 def summarize_text_with_openai(text):
     try:
         prompt = f"Create a brief summary in the first person for a resume with the following structure, within 240 characters: 'Hello 👋🏼 [summary section] [latest 3 jobs] [3 top skills] [languages] #tinycv #resume #opentowork'. Resume details:\n\n{text}"
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant that creates brief first-person resume summaries within 240 characters."},
-                {"role": "user", "content": prompt}
-            ],
-            max_tokens=240,
-        )
+        response = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant that creates brief first-person resume summaries within 240 characters."},
+        {"role": "user", "content": prompt}
+    ],
+    max_tokens=240,
+)
+
         print("API Response:", response)  # Log the full response
         summary = response.choices[0].message.content.strip()
         return {"summary": summary, "error": None}

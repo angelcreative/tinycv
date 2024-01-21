@@ -4,5 +4,5 @@ PyPDF2
 python-dotenv
 requests
 bcrypt
-openai==0.10.2
+openai>=0.12.0  # Use the latest version number
 gunicorn==20.0.4
