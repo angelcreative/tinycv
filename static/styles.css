@@ -257,8 +257,14 @@ p.motto {
     background-size: 46px;
     padding-left: 0px;
   }
-    body {background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 160% 120% no-repeat;
-    background-size: 230px;} 
+    body {
+    background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 160% 120% no-repeat;
+    background-size: 230px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;} 
     
     #loader {
     
