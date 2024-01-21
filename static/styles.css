@@ -25,9 +25,9 @@ body {
 }
 
 .renderCVright {
-    height: 200px;
+   height: 250px;
     width: 400px;
-    background: #d2e0f8 url(../static/img/placeholder.png) center bottom no-repeat;
+    background: #d2e0f86b url(../static/img/placeholder.png) center bottom no-repeat;
     border-radius: 24px;
     box-shadow: 0px 0px 22px 6px hsl(214.74deg 44.19% 83.14% / 50%);
     border: 1px solid #ecf3ff;
@@ -35,6 +35,7 @@ body {
     border-bottom-color: #e5eefe;
     border-top-color: #e5eefe;
     background-size: 70%;
+    backdrop-filter: blur(5px);
 }
 
 .renderCVLeft {
@@ -55,7 +56,7 @@ padding-top: 38px;
     color: #43589d;
     font-size: 36px;
     text-align: center;
-    background: url(../static/img/logo.svg) 80px 40px no-repeat;
+    background: url(../static/img/logo.svg) 226px 42px no-repeat;
     background-size: 46px;
     padding-left: 0px;
     font-weight: 100;
@@ -200,12 +201,13 @@ p.motto {
 
 
 #loader {
-   display: block;
+    display: block;
     margin: auto;
     width: 50px;
     height: 50px;
     position: absolute;
-    bottom: 70px;
+    bottom: -10px;
+    zoom: 3;
 }
 
 
@@ -229,8 +231,21 @@ p.motto {
     text-align: left; /* Align text to the left */
 }
 
-/* Style for the copy button */
+.warntime {
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px 30px;
+    font-size: 12px;
+}
 
+.credits {
+    font-size: 12px;
+}
+
+.credits a {
+    color: #7e9bff;
+    text-decoration: none;
+}
 
 
 
@@ -240,4 +255,17 @@ p.motto {
     background-size: 46px;
     padding-left: 0px;
   }
+    body {background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 160% 120% no-repeat;
+    background-size: 230px;} 
+    
+    #loader {
+    
+        bottom: -36px;}
+    
+    .headerArrow {
+
+    top: 150px;
+    right: 30px;
+   }
+    
 }
