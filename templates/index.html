@@ -51,40 +51,40 @@
 
     <article class="renderCV">
         <section class="renderCVLeft">
+    <form id="combinedUploadForm" enctype="multipart/form-data">
+        <!-- File Upload -->
+        <input type="file" name="file" id="file" disabled="" style="visibility: hidden; height:1px;">
+        <div id="uploadButton" class="upload-btn disabled">Upload your resume <span class="arrowUp">↑</span></div>
+        <p id="fileLoadedMessage" style="display:none;"></p> <!-- File loaded message -->
 
+        <!-- Image Upload -->
+        <input type="file" id="imageUpload" name="image" accept="image/*" style="visibility: hidden; height:1px;">
+        <div id="imageUploadButton" class="upload-img">Upload your avatar <span class="arrowUp">↑</span></div>
+        <p id="imageLoadedMessage" style="display:none;"></p> <!-- Image loaded message -->
+        <div id="imageError" style="color: red; display: none;">Image size not allowed. Max 500px x 500px.</div>
 
-<form id="uploadForm" enctype="multipart/form-data">
-    <input type="file" name="file" id="file" disabled="" style="visibility: hidden; height:1px;">
-    <div id="uploadButton" class="upload-btn disabled">Upload your resume <span class="arrowUp">↑</span></div>
-    <p id="fileLoadedMessage" style="display:none;"></p>
-    <button type="submit" id="submitCVButton" disabled="" style="display:none;">Make my TinyCV! ✨</button>
-    <button id="buyNowButton">Make my TinyCV 2,77€</button>
-    <p class="motto">Perfectly crafted for sharing on social media platforms, it's the ideal way to showcase your professional profile with ease and style.</p>
-    <div class="logos">
-        <img src="../static/img/linkedin.svg"><img src="../static/img/xing.svg"><img src="../static/img/x.svg">
-    </div>
-</form>
+        <!-- Buttons -->
+        <button type="submit" id="submitCVButton" disabled="" style="display:none;">Make my TinyCV! ✨</button>
+        <button id="buyNowButton">Make my TinyCV 2,77€</button>
 
-<form id="imageUploadForm">
-    <input type="file" id="imageUpload" accept="image/*" style="visibility: hidden; height:1px;">
-    <div id="imageUploadButton" class="upload-img">Upload your avatar <span class="arrowUp">↑</span></div>
-    <p id="imageLoadedMessage" style="display:none;"></p> <!-- Image loaded message -->
-    <div id="imageError" style="color: red; display: none;">Image size not allowed. Max 500px x 500px.</div>
-</form>
+        <p class="motto">Perfectly crafted for sharing on social media platforms, it's the ideal way to showcase your professional profile with ease and style.</p>
+        <div class="logos">
+            <img src="../static/img/linkedin.svg"><img src="../static/img/xing.svg"><img src="../static/img/x.svg">
+        </div>
+    </form>
+</section>
 
-
-
-
-
-        </section>
 
         <section class="renderCVright">
             <p class="warntime">Quick for short resumes, a bit more time for the longer ones - we adapt to your CV's length!</p>
-            <div id="summaryCard" style="display:none;">
+           <!-- Inside your HTML where the summaryCard is defined -->
+<div id="summaryCard" style="display: none">
+    <img id="summaryImage" src="../static/img/iconTop.png" alt="Profile Image" style="max-width: 500px; max-height: 500px;">
+    <section>
+        <!-- Your summary content here -->
+    </section>
+</div>
 
-
-
-            </div>
             <div id="loader" style="display: none;">
                 <p>Building your tiny cv...</p>
                 <img class="loader" src="../static/img/loader.svg" alt="Loading..."></div>
@@ -320,24 +320,31 @@ $('#imageUpload').on('change', function() {
         });
     }
 
-   $('#imageUpload').on('change', function(e) {
-    var file = e.target.files[0];
-    if (file) {
-        var img = new Image();
-        img.onload = function() {
-            if (this.width > 500 || this.height > 500) {
-                $('#imageError').show();
-                $('#imageUpload').val(''); // Clear the input
-                $('#imageLoadedMessage').hide(); // Hide the loaded message
-            } else {
-                $('#imageError').hide();
-                var fileName = file.name;
-                $('#imageLoadedMessage').text(fileName + ' loaded').show(); // Show the file name
-            }
-        };
-        img.src = URL.createObjectURL(file);
-    }
-});
+ $('#imageUpload').on('change', function(e) {
+        var file = e.target.files[0];
+        if (file) {
+            var img = new Image();
+            img.onload = function() {
+                if (this.width > 500 || this.height > 500) {
+                    $('#imageError').show();
+                    $('#imageUpload').val(''); // Clear the input
+                    $('#imageLoadedMessage').hide(); // Hide the loaded message
+                } else {
+                    $('#imageError').hide();
+                    var fileName = file.name;
+                    $('#imageLoadedMessage').text(fileName + ' loaded').show(); // Show the file name
+
+                    // Update the summary image src to the selected file
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#summaryImage').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            img.src = URL.createObjectURL(file);
+        }
+    });
 
 });
 </script>
