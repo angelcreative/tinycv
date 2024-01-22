@@ -101,7 +101,6 @@ def split_text(text, max_length):
         chunks.append(' '.join(current_chunk))
 
     return chunks
-
 @app.route('/upload', methods=['POST'])
 def upload_file():
     try:
@@ -116,17 +115,16 @@ def upload_file():
         max_length = 1000
         text_chunks = split_text(preprocessed_text, max_length)
 
-       # Inside the upload_file function
-final_summaries = []
-for chunk in text_chunks:
-    result = summarize_text_with_openai(chunk)
-    if result["summary"]:
-        final_summaries.append(f'<section><p>{result["summary"]}</p><div></div></section>')
-    else:
-        error_message = result["error"] or "No summary available for this section."
-        final_summaries.append(f'<section><p>{error_message}</p></section>')
+        final_summaries = []
+        for chunk in text_chunks:
+            result = summarize_text_with_openai(chunk)
+            if result["summary"]:
+                final_summaries.append(f'<section><p>{result["summary"]}</p></div></section>')
+            else:
+                error_message = result["error"] or "No summary available for this section."
+                final_summaries.append(f'<section><p>{error_message}</p></section>')
 
-return jsonify({"html_summaries": final_summaries or ["No summary available."]})
+        return jsonify({"html_summaries": final_summaries or ["No summary available."]})
 
     except Exception as e:
         print(f"Error occurred: {e}")
