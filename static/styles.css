@@ -38,6 +38,7 @@ body {
     border-top-color: #e5eefe;
     background-size: 70%;
     backdrop-filter: blur(5px);
+    position: relative
 }
 
 .renderCVLeft {
