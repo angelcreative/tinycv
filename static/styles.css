@@ -251,6 +251,7 @@ p.motto {
     flex-direction: column;
     box-shadow: 0px 0px 20px 0px #b3c5e77d;
     border: 1px solid #ffffff54;
+    z-index: 9
 }
 
 
