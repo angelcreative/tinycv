@@ -78,6 +78,7 @@ padding-top: 38px;
     margin: 10px 0;
     display: block;
     padding-bottom: 12px;
+    width: 420px;
 }
 .headerArrow {
     background: url(../static/img/arrowDown.png) center center no-repeat;
@@ -198,11 +199,31 @@ p.motto {
     color: #7a89a2;
     text-align: center;
     padding: 0;
-    margin: 40px auto;
+    margin: 40px auto 20px;
     max-width: 260px;
-
+    font-size: 12px;
+}
+.logos img {
+    height: 20px;
+    width: 20px;
+    border-radius: 8px;
+    display: block;
+    background: #dae1ee;
+    padding: 10px;
+    border: 1px solid #dae1ee;
+    color: #7e9bff;
+    box-shadow: 7px 3px 20px #b9c4d8, -3px -4px 18px #fff;
+    font-family: arial, sans-serif;
 }
 
+.logos {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 20px;
+    margin: 0 auto;
+   
+}
 
 #loader {
     display: block;
@@ -324,13 +345,13 @@ aside.showCard {
 
 @media only screen and (max-width: 600px) {
   .header {
-    background: url(../static/img/logo.svg) center 0px no-repeat;
+    /*background: url(../static/img/logo.svg) center 0px no-repeat;*/
     background-size: 46px;
     padding-left: 0px;
   }
     body {
-   /* background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 160% 120% no-repeat;
-    background-size: 230px;*/
+   background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 160% 120% no-repeat;
+    background-size: 230px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -347,5 +368,10 @@ aside.showCard {
     top: 200px;
     right: 30px;
    }
+    
+    .logos {
+   
+    margin-bottom: 40px
+}
     
 }
