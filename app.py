@@ -116,44 +116,23 @@ def upload_file():
         max_length = 1000
         text_chunks = split_text(preprocessed_text, max_length)
 
-        final_summary = None
-        for i, chunk in enumerate(text_chunks):
-            result = summarize_text_with_openai(chunk)
-            if result["summary"]:
-                # Store only the last summary
-                if i == len(text_chunks) - 1:
-                    final_summary = f'<section><p>{result["summary"]}</p><div></div></section>'
-            else:
-                error_message = result["error"] or "No summary available for this section."
-                final_summary = f'<section><p>{error_message}</p></section>'
+       # Inside the upload_file function
+final_summaries = []
+for chunk in text_chunks:
+    result = summarize_text_with_openai(chunk)
+    if result["summary"]:
+        final_summaries.append(f'<section><p>{result["summary"]}</p><div></div></section>')
+    else:
+        error_message = result["error"] or "No summary available for this section."
+        final_summaries.append(f'<section><p>{error_message}</p></section>')
 
-        return jsonify({"html_summary": final_summary or "No summary available."})
+return jsonify({"html_summaries": final_summaries or ["No summary available."]})
+
     except Exception as e:
         print(f"Error occurred: {e}")
         return jsonify({"error": str(e)}), 500
 
-def split_text(text, max_length):
-    """
-    Splits text into chunks where each chunk has a length less than or equal to max_length.
-    """
-    words = text.split()
-    chunks = []
-    current_chunk = []
-    current_length = 0
 
-    for word in words:
-        if current_length + len(word) > max_length:
-            chunks.append(' '.join(current_chunk))
-            current_chunk = [word]
-            current_length = len(word)
-        else:
-            current_chunk.append(word)
-            current_length += len(word) + 1  # Add 1 for space
-
-    if current_chunk:
-        chunks.append(' '.join(current_chunk))
-
-    return chunks
 
 if __name__ == '__main__':
     app.run(debug=True)
