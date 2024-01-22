@@ -2,14 +2,14 @@ body {
     font-family: courier, slab-serif;
     color: #364844;
     line-height: 1.5;
-    background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 90% 100% no-repeat;
+    background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) center bottom no-repeat;
     background-size: 220px;
     height: 100vh;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: end;
 }
 
 
@@ -56,8 +56,8 @@ padding-top: 38px;
     color: #43589d;
     font-size: 36px;
     text-align: center;
-    background: url(../static/img/logo.svg) 226px 42px no-repeat;
-    background-size: 46px;
+    /*background: url(../static/img/logo.svg) 226px 42px no-repeat;
+    background-size: 46px;*/
     padding-left: 0px;
     font-weight: 100;
 }
@@ -255,7 +255,72 @@ p.motto {
     text-decoration: none;
 }
 
+.slider {
+    height: 250px;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
 
+.slider::before, .slider::after {
+    background: linear-gradient(to right, #dae1ee 0%, rgba(255, 255, 255, 0) 100%);
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: 100px;
+    z-index: 2;
+}
+
+.slider::after {
+    right: 0;
+    top: 0;
+    -webkit-transform: rotateZ(180deg);
+    transform: rotateZ(180deg);
+}
+
+.slider::before {
+    left: 0;
+    top: 0;
+}
+
+.slider .slide-track {
+    animation: scroll 80s linear infinite;
+    display: flex;
+    width: calc(250px * 18);
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.slider .slide-track:hover {
+    animation-play-state: paused;
+}
+
+.slide {
+    background-color: transparent;
+    padding: 40px 12px;
+}
+
+aside.showCard {
+    background: #dae1ee73;
+    border-radius: 12px;
+    padding: 5px 15px 10px 15px;
+    border: 1px solid #dae1ee;
+    color: #7a89a2;
+    box-shadow: 7px 3px 20px #7d94bd54, -3px -4px 18px #ffffffe3;
+    font-family: courier, sans-serif;
+    backdrop-filter: blur(22px);
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-250px * 9));
+    }
+}
 
 @media only screen and (max-width: 600px) {
   .header {
@@ -264,13 +329,14 @@ p.motto {
     padding-left: 0px;
   }
     body {
-    background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 160% 120% no-repeat;
-    background-size: 230px;
+   /* background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 160% 120% no-repeat;
+    background-size: 230px;*/
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: center;
-    justify-content: center;} 
+    justify-content: center;
+    margin-top:80px;} 
     
     #loader {
     
@@ -278,7 +344,7 @@ p.motto {
     
     .headerArrow {
 
-    top: 150px;
+    top: 200px;
     right: 30px;
    }
     
