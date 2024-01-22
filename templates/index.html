@@ -35,10 +35,8 @@
 <body>
     <div class="headerApp">
     <h1 class="header">TinyCV<br><span>Create a lovely resume in a snap, it's fast and friendly!</span></h1>
-          <p class="warntime
-    ">Quick for short resumes, a bit more time for the longer ones - we adapt to your CV's length!</p>
-          <p class="credits"> By <a href="https://x.com/angelcreative">@angelcreative</a>
-    </p>
+          <p class="warntime">Quick for short resumes, a bit more time for the longer ones - we adapt to your CV's length!</p>
+          
    
         <div class="headerArrow"></div>
 </div>
@@ -48,15 +46,16 @@
     
   
 
-    <form id="uploadForm" enctype="multipart/form-data">
-    <input type="file" name="file" id="file" style="visibility: hidden; height:1px;">
-  <div id="uploadButton" class="upload-btn">Upload your resume <span class="arrowUp">↑</span></div>
-        <p id="fileLoadedMessage" style="display:none;"></p>
-
-    <button type="submit">Make my TinyCV! ✨ </button>
-        <p class="motto">Whip up a charming, compact resume in just a few seconds - it's super quick and easy!</p> 
+   <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" id="file" disabled style="visibility: hidden; height:1px;">
+    <div id="uploadButton" class="upload-btn" disabled>Upload your resume <span class="arrowUp">↑</span></div>
+    <p id="fileLoadedMessage" style="display:none;"></p>
+    <button type="submit" id="submitCVButton" disabled style="display:none;">Make my TinyCV! ✨</button>
+    <button id="buyNowButton">Make my TinyCV 2,77€</button>
+    <p class="motto">Whip up a charming, compact resume in just a few seconds - it's super quick and easy!</p> 
 </form>
-    
+
+
 
         
         
@@ -64,12 +63,11 @@
    
     <section class="renderCVright">
       
-      <div id="summaryCard" style="display:none;">
-        
-       
-</div>
-<button id="copyButton" style="display:none;">Copy Summary</button>
-<button id="clearSummaryButton" style="display:none;">Clear summary <img class="clearIcon" src="../static/img/broom.svg"></button>
+      <div id="summaryCard" style="display:none;"></div>
+
+    <button id="buyNowButton" style="display:none;">Buy Now</button>
+    <button id="copyButton" style="display:none;">Copy Summary</button>
+    <button id="clearSummaryButton" style="display:none;">Clear summary <img class="clearIcon" src="../static/img/broom.svg"></button>
 
 <img id="loader" src="../static/img/loader.svg" style="display: none;" alt="Loading..."/>
 
@@ -78,77 +76,98 @@
     </section>
  </article> 
     
+    <!--<p class="credits"> By <a href="https://x.com/angelcreative">@angelcreative</a>
+    </p>-->
+    
   
     
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#uploadForm').submit(function(e) {
-            e.preventDefault();
-            var formData = new FormData(this);
+$(document).ready(function() {
+    // Check for successful payment in the URL
+    var urlParams = new URLSearchParams(window.location.search);
+    var paymentSuccess = urlParams.get('payment_success');
 
-            // Show the loader and file loaded message
-            $('#loader').show();
-            $('#fileLoadedMessage').text($('#file')[0].files[0].name + ' loaded').show();
+     if (paymentSuccess) {
+        // Payment was successful
+        $('#file').prop('disabled', false);
+        $('#uploadButton').removeClass('disabled').css('cursor', 'pointer');
+        $('#submitCVButton').show().prop('disabled', false);
+        $('#buyNowButton').hide();
+    } else {
+        // Payment has not been made yet
+        $('#file').prop('disabled', true);
+        $('#uploadButton').addClass('disabled'); // Add 'disabled' class
+        $('#submitCVButton').hide().prop('disabled', true);
 
-            $.ajax({
-                url: '/upload',
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    // Hide the loader
-                    $('#loader').hide();
-
-                    // Insert the HTML summary into the 'summaryCard' div
-                    $('#summaryCard').html(response.html_summary);
-                    $('#summaryCard').show();
-
-                    // Show the copy and clear summary buttons
-                    $('#copyButton').show();
-                    $('#clearSummaryButton').show(); // Show the clear summary button
-                },
-                error: function() {
-                    // Hide the loader in case of error
-                    $('#loader').hide();
-                    alert('Error processing file.');
-                }
-            });
+        $('#buyNowButton').show().click(function() {
+            window.location.href = 'https://buy.stripe.com/eVacN18eE9At7jG145';
         });
+    }
 
-        // Custom upload button functionality
-        $('#uploadButton').click(function() {
-            $('#file').click();
-        });
+    $('#uploadForm').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
 
-        $('#file').change(function() {
-            if(this.files && this.files.length > 0) {
-                $('#fileLoadedMessage').text(this.files[0].name + ' loaded').show();
+        // Show the loader
+        $('#loader').show();
+
+        $.ajax({
+            url: '/upload',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                // Hide the loader
+                $('#loader').hide();
+
+                // Display the HTML summary in the 'summaryCard' div
+                $('#summaryCard').html(response.html_summary);
+                $('#summaryCard').show();
+
+                // Additional code to handle the summary display can go here
+            },
+            error: function() {
+                // Hide the loader in case of error
+                $('#loader').hide();
+                alert('Error processing file.');
             }
         });
-
-        // Copy button functionality
-        $('#copyButton').click(function() {
-            var textToCopy = $('#summaryCard').text();
-            var tempElement = $("<textarea>");
-            $("body").append(tempElement);
-            tempElement.val(textToCopy).select();
-            document.execCommand("copy");
-            tempElement.remove();
-            alert('Summary copied to clipboard!');
-        });
-
-        // Clear summary button functionality
-        // Clear summary button functionality
-        $('#clearSummaryButton').click(function() {
-            $('#summaryCard').empty().hide(); // Clear and hide the summary
-            $('#copyButton').hide(); // Hide the copy summary button
-            $(this).hide(); // Hide the clear summary button
-        });
     });
+
+    // Custom upload button functionality
+    $('#uploadButton').click(function() {
+        $('#file').click();
+    });
+
+    $('#file').change(function() {
+        if (this.files && this.files.length > 0) {
+            $('#fileLoadedMessage').text(this.files[0].name + ' loaded').show();
+        }
+    });
+
+    // Copy button functionality
+    $('#copyButton').click(function() {
+        var textToCopy = $('#summaryCard').text();
+        var tempElement = $("<textarea>");
+        $("body").append(tempElement);
+        tempElement.val(textToCopy).select();
+        document.execCommand("copy");
+        tempElement.remove();
+        alert('Summary copied to clipboard!');
+    });
+
+    // Clear summary button functionality
+    $('#clearSummaryButton').click(function() {
+        $('#summaryCard').empty().hide(); // Clear and hide the summary
+        $('#copyButton').hide(); // Hide the copy summary button
+        $(this).hide(); // Hide the clear summary button
+    });
+});
+
 </script>
 
 

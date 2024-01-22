@@ -190,8 +190,12 @@ button:active {
     font-size: 14px;
 }
 
+ .upload-btn.disabled {
+        cursor: not-allowed;
+    }
+
 p.motto {
-    color: #a7b4ca;
+    color: #7a89a2;
     text-align: center;
     padding: 0;
     margin: 40px auto;
@@ -206,7 +210,8 @@ p.motto {
     width: 50px;
     height: 50px;
     position: absolute;
-    bottom: -10px;
+    top: -10px;
+    right:20px;
     zoom: 3;
 }
 
@@ -237,6 +242,7 @@ p.motto {
     text-align: center;
     padding: 0;
     font-size: 12px;
+    color:#7a89a2;
 }
 
 .credits {
