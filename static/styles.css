@@ -163,16 +163,18 @@ button {
     width: 250px;
     box-shadow: 7px 3px 20px #A7B2C6, -3px -4px 18px #fff;
     border:none;
+    transition: background 300ms ease-in-out;
 }
 
 button:hover {
-    background: #7e9bff;
+    background: linear-gradient(0deg, #7e9bff, #7e9bff);
     box-shadow: 7px 3px 20px #A7B2C6, -3px -4px 18px #fff;
+    box-shadow: 0px 0px 20px 20px #d8e0eeb3;
 }
 
 
 button:active {
-    background: #43589d;
+    background:  linear-gradient(0deg, #43589d, #43589d);
 }
 .upload-btn {
     padding: 10px 20px;
@@ -193,6 +195,7 @@ button:active {
     width: 210px;
     justify-content: center;
     font-size: 14px;
+    transition: background 300ms ease-in
 }
 
  .upload-btn.disabled {
@@ -257,6 +260,60 @@ p.motto {
     position: absolute;
     top: 0;
     right: 30px;
+}
+
+#clearSummaryButton:hover, #copyButton:hover {
+    background: linear-gradient(0deg, #43589d, #7e9bff);
+}
+
+#clearSummaryButton:active, #copyButton:active {
+    background: #43589d;
+}
+
+
+#copyButton:hover::after, 
+#clearSummaryButton:hover::after {
+    background: #c0ceff;
+    display: block;
+    position: absolute;
+    padding: 4px 8px;
+    border-radius: 24px;
+    box-shadow: 7px 3px 20px #A7B2C6, -3px -4px 18px #fff;
+    top:-10px;
+    min-width:fit-content;
+}
+
+
+#copyButton:hover::after {
+    content:"copy";
+    left:0px
+} 
+
+#clearSummaryButton:hover::after {
+    content:"clear";
+    right:0px
+}
+
+
+.upload-btn:hover {
+    background:#e4e8f0
+}
+
+.upload-btn:active {
+    background:#cbd3e2 
+}
+
+
+.upload-btn:hover::after {
+    background: #c0ceff;
+    display: block;
+    position: absolute;
+    padding: 4px 8px;
+    border-radius: 24px;
+    box-shadow: 7px 3px 20px #A7B2C6, -3px -4px 18px #fff;
+    top:-36px;
+    min-width:fit-content;
+content:"work best on 4 page resumes";
 }
 
 img.loader {
