@@ -54,7 +54,7 @@ print(cleaned_text)
 
 def summarize_text_with_openai(text):
     try:
-        prompt = f"Create a brief summary in the first person for a resume with the following structure, within 240 characters: 'Hello 👋🏼 [summary section] [latest 3 jobs] [3 top skills] [languages] #tinycv #resume #opentowork'. Resume details:\n\n{text}"
+        prompt = f"Create a brief summary in the first person for a resume with the following structure, within 230 characters: 'Hello 👋🏼 I'm a [summary section] [latest 3 jobs] [3 top skills] [languages if any] #tinycv #resume #opentowork'. Resume details:\n\n{text}"
         response = client.chat.completions.create(
     model="gpt-3.5-turbo",
     messages=[

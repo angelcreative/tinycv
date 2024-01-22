@@ -2,7 +2,7 @@ body {
     font-family: courier, slab-serif;
     color: #364844;
     line-height: 1.5;
-    background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) center bottom no-repeat;
+    background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 84% bottom no-repeat;
     background-size: 220px;
     height: 100vh;
     display: flex;
@@ -10,6 +10,8 @@ body {
     flex-wrap: wrap;
     align-items: center;
     justify-content: end;
+    padding: 0;
+    margin: 0;
 }
 
 
@@ -313,7 +315,7 @@ p.motto {
     box-shadow: 7px 3px 20px #A7B2C6, -3px -4px 18px #fff;
     top:-36px;
     min-width:fit-content;
-content:"work best on 4 page resumes";
+content:"work best on 4 page max";
 }
 
 img.loader {
@@ -435,6 +437,13 @@ aside.showCard {
     }
 }
 
+
+    @media only screen and (max-width: 1025px) {
+   body {background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 90% 100% no-repeat;
+          background-size: 230px;}
+}
+
+
 @media only screen and (max-width: 600px) {
   .header {
     /*background: url(../static/img/logo.svg) center 0px no-repeat;*/
@@ -442,8 +451,8 @@ aside.showCard {
     padding-left: 0px;
   }
     body {
-   background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 160% 120% no-repeat;
-    background-size: 230px;
+   background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 130% 100% no-repeat;
+    background-size: 200px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -466,4 +475,4 @@ aside.showCard {
     margin-bottom: 40px
 }
     
-}
+
