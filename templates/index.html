@@ -32,6 +32,8 @@
     <meta name="googlebot" content="index,follow">
     <!-- Your head content here (e.g., title, meta, CSS links) -->
     <link rel="stylesheet" type="text/css" href="../static/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+
 </head>
 
 <body>
@@ -44,25 +46,31 @@
 
 
 
-        <div class="headerArrow"></div>
+       <!-- <div class="headerArrow"></div>-->
     </div>
 
     <article class="renderCV">
         <section class="renderCVLeft">
 
 
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" id="file" disabled="" style="visibility: hidden; height:1px;">
+    <div id="uploadButton" class="upload-btn disabled">Upload your resume <span class="arrowUp">↑</span></div>
+    <p id="fileLoadedMessage" style="display:none;"></p>
+    <button type="submit" id="submitCVButton" disabled="" style="display:none;">Make my TinyCV! ✨</button>
+    <button id="buyNowButton">Make my TinyCV 2,77€</button>
+    <p class="motto">Perfectly crafted for sharing on social media platforms, it's the ideal way to showcase your professional profile with ease and style.</p>
+    <div class="logos">
+        <img src="../static/img/linkedin.svg"><img src="../static/img/xing.svg"><img src="../static/img/x.svg">
+    </div>
+</form>
 
-            <form id="uploadForm" enctype="multipart/form-data">
-                <input type="file" name="file" id="file" disabled="" style="visibility: hidden; height:1px;">
-                <div id="uploadButton" class="upload-btn disabled" disabled="">Upload your resume <span class="arrowUp">↑</span></div>
-                <p id="fileLoadedMessage" style="display:none;"></p>
-                <button type="submit" id="submitCVButton" disabled="" style="display:none;">Make my TinyCV! ✨</button>
-                <button id="buyNowButton">Make my TinyCV 2,77€</button>
-                <p class="motto">Perfectly crafted for sharing on social media platforms, it's the ideal way to showcase your professional profile with ease and style.</p>
-                <div class="logos">
-                    <img src="../static/img/linkedin.svg"><img src="../static/img/xing.svg"><img src="../static/img/x.svg">
-                </div>
-            </form>
+<form id="imageUploadForm">
+    <input type="file" id="imageUpload" accept="image/*" style="visibility: hidden; height:1px;">
+    <div id="imageUploadButton" class="upload-img">Upload your avatar <span class="arrowUp">↑</span></div>
+    <p id="imageLoadedMessage" style="display:none;"></p> <!-- Image loaded message -->
+    <div id="imageError" style="color: red; display: none;">Image size not allowed. Max 500px x 500px.</div>
+</form>
 
 
 
@@ -84,6 +92,7 @@
             <div class="buttonAction">
                 <button id="copyButton" style="display:none;"><img src="../static/img/copy.svg" class="clearIcon"></button>
                 <button id="clearSummaryButton" style="display:none;"><img class="clearIcon" src="../static/img/broom.svg"></button>
+                <button id="captureButton" style="display:none;"><img class="clearIcon" src="../static/img/broom.svg"></button>
             </div>
 
 
@@ -208,93 +217,130 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Check for successful payment in the URL
-            var urlParams = new URLSearchParams(window.location.search);
-            var paymentSuccess = urlParams.get('payment_success');
-        
-             if (paymentSuccess) {
-                // Payment was successful
-                $('#file').prop('disabled', false);
-                $('#uploadButton').removeClass('disabled').css('cursor', 'pointer');
-                $('#submitCVButton').show().prop('disabled', false);
-                $('#buyNowButton').hide();
-            } else {
-                // Payment has not been made yet
-                $('#file').prop('disabled', true);
-                $('#uploadButton').addClass('disabled'); // Add 'disabled' class
-                $('#submitCVButton').hide().prop('disabled', true);
-        
-                $('#buyNowButton').show().click(function() {
-                    window.location.href = 'https://buy.stripe.com/eVacN18eE9At7jG145';
-                });
-            }
-        
-            $('#uploadForm').submit(function(e) {
-                e.preventDefault();
-                var formData = new FormData(this);
-        
-                // Show the loader
-                $('#loader').show();
-        
-                $.ajax({
-                    url: '/upload',
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        // Hide the loader
-                        $('#loader').hide();
-        
-                        // Display the HTML summary in the 'summaryCard' div
-                        $('#summaryCard').html(response.html_summary);
-                        $('#summaryCard').show();
-        
-                        // Additional code to handle the summary display can go here
-                         // Show the 'Copy' and 'Clear' buttons
-                        $('#copyButton').show();
-                        $('#clearSummaryButton').show();
-                    },
-                    error: function() {
-                        // Hide the loader in case of error
-                        $('#loader').hide();
-                        alert('Error processing file.');
-                    }
-                });
-            });
-        
-            // Custom upload button functionality
-            $('#uploadButton').click(function() {
-                $('#file').click();
-            });
-        
-            $('#file').change(function() {
-                if (this.files && this.files.length > 0) {
-                    $('#fileLoadedMessage').text(this.files[0].name + ' loaded').show();
-                }
-            });
-        
-            // Copy button functionality
-            $('#copyButton').click(function() {
-                var textToCopy = $('#summaryCard').text();
-                var tempElement = $("<textarea>");
-                $("body").append(tempElement);
-                tempElement.val(textToCopy).select();
-                document.execCommand("copy");
-                tempElement.remove();
-                alert('Summary copied to clipboard!');
-            });
-        
-            // Clear summary button functionality
-            $('#clearSummaryButton').click(function() {
-                $('#summaryCard').empty().hide(); // Clear and hide the summary
-                $('#copyButton').hide(); // Hide the copy summary button
-                $(this).hide(); // Hide the clear summary button
-            });
+   <script>
+$(document).ready(function() {
+    // Check for successful payment
+    var urlParams = new URLSearchParams(window.location.search);
+    var paymentSuccess = urlParams.get('payment_success');
+
+    if (paymentSuccess) {
+        $('#file').prop('disabled', false);
+        $('#uploadButton').removeClass('disabled').css('cursor', 'pointer');
+        $('#submitCVButton').show().prop('disabled', false);
+        $('#buyNowButton').hide();
+    } else {
+        $('#file').prop('disabled', true);
+        $('#uploadButton').addClass('disabled');
+        $('#submitCVButton').hide().prop('disabled', true);
+        $('#buyNowButton').show().on('click', function() {
+            window.location.href = 'https://buy.stripe.com/eVacN18eE9At7jG145';
         });
-    </script>
+    }
+
+    $('#uploadForm').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $('#loader').show();
+        $.ajax({
+            url: '/upload',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                $('#loader').hide();
+                $('#summaryCard').html(response.html_summary).show();
+                $('#copyButton').show();
+                $('#clearSummaryButton').show();
+            },
+            error: function() {
+                $('#loader').hide();
+                alert('Error processing file.');
+            }
+        });
+    });
+
+    $('#uploadButton').on('click', function() {
+        $('#file').click();
+    });
+
+    $('#file').on('change', function() {
+        if (this.files && this.files.length > 0) {
+            $('#fileLoadedMessage').text(this.files[0].name + ' loaded').show();
+        }
+    });
+    
+   // Trigger the file input when the image upload button is clicked
+    $('#imageUploadButton').on('click', function() {
+        $('#imageUpload').click();
+    });
+
+
+$('#imageUpload').on('change', function() {
+    // Handle file selected event
+});
+
+
+    $('#copyButton').on('click', function() {
+        var textToCopy = $('#summaryCard').text();
+        var tempElement = $('<textarea>');
+        $('body').append(tempElement);
+        tempElement.val(textToCopy).select();
+        document.execCommand('copy');
+        tempElement.remove();
+        alert('Summary copied to clipboard!');
+    });
+
+    $('#clearSummaryButton').on('click', function() {
+        $('#summaryCard').empty().hide();
+        $('#copyButton').hide();
+        $(this).hide();
+    });
+
+    $('#captureButton').on('click', function() {
+        html2canvas($('#summaryCard')[0]).then(canvas => {
+            uploadCanvasToImgbb(canvas);
+        });
+    });
+
+    function uploadCanvasToImgbb(canvas) {
+        var dataURL = canvas.toDataURL('image/png');
+        var imageData = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        $.ajax({
+            url: 'https://api.imgbb.com/1/upload',
+            method: 'POST',
+            data: JSON.stringify({ image: imageData, key: 'ba238be3f3764905b1bba03fc7a22e28' }),
+            contentType: 'application/json',
+            success: function(result) {
+                console.log('Image URL:', result.data.url);
+            },
+            error: function(error) {
+                console.error('Error uploading image:', error);
+            }
+        });
+    }
+
+   $('#imageUpload').on('change', function(e) {
+    var file = e.target.files[0];
+    if (file) {
+        var img = new Image();
+        img.onload = function() {
+            if (this.width > 500 || this.height > 500) {
+                $('#imageError').show();
+                $('#imageUpload').val(''); // Clear the input
+                $('#imageLoadedMessage').hide(); // Hide the loaded message
+            } else {
+                $('#imageError').hide();
+                var fileName = file.name;
+                $('#imageLoadedMessage').text(fileName + ' loaded').show(); // Show the file name
+            }
+        };
+        img.src = URL.createObjectURL(file);
+    }
+});
+
+});
+</script>
 
 
 

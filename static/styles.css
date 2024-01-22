@@ -5,11 +5,6 @@ body {
     background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 84% bottom no-repeat;
     background-size: 220px;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: end;
     padding: 0;
     margin: 0;
 }
@@ -79,7 +74,7 @@ padding-top: 38px;
     -webkit-text-fill-color: transparent;
     font-size: 20px;
     line-height: 1;
-    margin: 10px 0;
+    margin: 10px auto;
     display: block;
     padding-bottom: 12px;
     width: 420px;
@@ -91,7 +86,7 @@ padding-top: 38px;
     background-size: 60px;
     position: absolute;
     top: 122px;
-    right: -30px;
+    right: 130px;
     z-index: 9;
 }
 
@@ -179,7 +174,7 @@ button:hover {
 button:active {
     background:  linear-gradient(0deg, #43589d, #43589d);
 }
-.upload-btn {
+.upload-btn, .upload-img {
     padding: 10px 20px;
     background-color: #dae1ee;
     color: #8096e6;
@@ -199,6 +194,17 @@ button:active {
     justify-content: center;
     font-size: 14px;
     transition: background 300ms ease-in
+}
+.upload-img:hover::after {
+    background: #c0ceff;
+    display: block;
+    position: absolute;
+    padding: 4px 8px;
+    border-radius: 24px;
+    box-shadow: 7px 3px 20px #A7B2C6, -3px -4px 18px #fff;
+    bottom: -38px;
+    min-width: fit-content;
+    content: "500x500 max";
 }
 
  .upload-btn.disabled {
@@ -373,11 +379,13 @@ img.loader {
 }
 
 .slider {
-    height: 250px;
     margin: 0;
     overflow: hidden;
     position: relative;
     width: 100%;
+    height: 260px;
+    bottom: 0;
+    padding-top: 28px;
 }
 
 .slider::before, .slider::after {
