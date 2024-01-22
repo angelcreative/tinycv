@@ -295,6 +295,9 @@ img.loader {
     padding: 0;
     font-size: 12px;
     color:#7a89a2;
+    top: 10px;
+    left: 18px;
+
 }
 
 .credits {
