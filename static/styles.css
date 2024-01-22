@@ -191,7 +191,7 @@ button:active {
 }
 
  .upload-btn.disabled {
-        cursor: not-allowed;
+        cursor: none;
     }
 
 p.motto {
