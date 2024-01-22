@@ -35,7 +35,7 @@
 <body>
     <div class="headerApp">
     <h1 class="header">Hello!👋🏼<br><span>Create a lovely resume in a snap powered by Ai, it's fast and friendly</span></h1>
-          <p class="warntime">Quick for short resumes, a bit more time for the longer ones - we adapt to your CV's length!</p>
+         
           
    
         <div class="headerArrow"></div>
@@ -47,10 +47,10 @@
   
 
    <form id="uploadForm" enctype="multipart/form-data">
-    <input type="file" name="file" id="file" disabled style="visibility: hidden; height:1px;">
-    <div id="uploadButton" class="upload-btn" disabled>Upload your resume <span class="arrowUp">↑</span></div>
+    <input type="file" name="file" id="file" disabled="" style="visibility: hidden; height:1px;">
+    <div id="uploadButton" class="upload-btn disabled" disabled="">Upload your resume <span class="arrowUp">↑</span></div>
     <p id="fileLoadedMessage" style="display:none;"></p>
-    <button type="submit" id="submitCVButton" disabled style="display:none;">Make my TinyCV! ✨</button>
+    <button type="submit" id="submitCVButton" disabled="" style="display:none;">Make my TinyCV! ✨</button>
     <button id="buyNowButton">Make my TinyCV 2,77€</button>
     <p class="motto">Perfectly crafted for sharing on social media platforms, it's the ideal way to showcase your professional profile with ease and style.</p> 
     <div class="logos">
@@ -65,13 +65,16 @@
     </section>
    
     <section class="renderCVright">
-      
-      <div id="summaryCard" style="display:none;"></div>
+       <p class="warntime">Quick for short resumes, a bit more time for the longer ones - we adapt to your CV's length!</p>
+      <div id="summaryCard" style="display:none;">
+     <div class="buttonAction">  <button id="copyButton" style="display:none;"><img src="../static/img/copy.svg" class="clearIcon"></button>
+    <button id="clearSummaryButton" style="display:none; "><img class="clearIcon" src="../static/img/broom.svg"></button></div>
 
-    <button id="copyButton" style="display:none;">Copy Summary</button>
-    <button id="clearSummaryButton" style="display:none;">Clear summary <img class="clearIcon" src="../static/img/broom.svg"></button>
+<div id="loader"  style="display: none;"><p>Building your tiny cv...</p>
+<img class="loader" src="../static/img/loader.svg" alt="Loading..."></div>
+      </div>
 
-<img id="loader" src="../static/img/loader.svg" style="display: none;" alt="Loading..."/>
+    
 
 
 
@@ -85,12 +88,12 @@
     <div class="slide-track">
         <div class="slide">
             <aside class="showCard">
-                <p>Hello! 👋🏼 I'm a freelance graphic designer and community manager with 2+ years of experience. Currently working at Artodontic as a graphic designer & community manager. Proficient in Adobe After Effects and Procreate. Fluent in Spanish & English. #tinycv #resume #opentowork</p>
+                <p>Hello! 👋🏼 I'm a freelance graphic designer and community manager with 2+ years of experience. Currently working at Artodontic as a graphic designer &amp; community manager. Proficient in Adobe After Effects and Procreate. Fluent in Spanish &amp; English. #tinycv #resume #opentowork</p>
             </aside>
         </div>
         <div class="slide">
         <aside class="showCard">
-                <p>Hello 👋🏼 I'm a UX/UI designer in Madrid, specializing in design systems. Experienced in product design, graphic design, event planning. Fluent in Catalan, Spanish, English. Certified in Digital Marketing, Wedding Planning, Community Management. Published on Behance & Homify. #tinycv #resume #opentowork"</p>
+                <p>Hello 👋🏼 I'm a UX/UI designer in Madrid, specializing in design systems. Experienced in product design, graphic design, event planning. Fluent in Catalan, Spanish, English. Certified in Digital Marketing, Wedding Planning, Community Management. Published on Behance &amp; Homify. #tinycv #resume #opentowork"</p>
             </aside></div>
         <div class="slide">
         <aside class="showCard">
@@ -218,6 +221,9 @@ $(document).ready(function() {
                 $('#summaryCard').show();
 
                 // Additional code to handle the summary display can go here
+                 // Show the 'Copy' and 'Clear' buttons
+                $('#copyButton').show();
+                $('#clearSummaryButton').show();
             },
             error: function() {
                 // Hide the loader in case of error
@@ -261,5 +267,6 @@ $(document).ready(function() {
 
 
 
-</body>
+
+<div id="ExtensionCheck_UsetifulAwesomeExtension"></div></body>
 </html>
