@@ -236,7 +236,7 @@ p.motto {
     height: 330px;
     position: absolute;
     top: 0;
-    right: 0;
+    right: -1px;
     background: #dae1ee;
     display: flex;
     align-items: center;
@@ -297,6 +297,7 @@ img.loader {
     color:#7a89a2;
     top: 10px;
     left: 18px;
+    position: absolute;
 
 }
 
