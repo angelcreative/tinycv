@@ -74,6 +74,16 @@
             <p class="warntime">Quick for short resumes, a bit more time for the longer ones - we adapt to your CV's length!</p>
             <div id="summaryCard" style="display:none;">
 
+<div class="tinder">
+  <div class="tinder--cards">
+    <!-- Dynamically insert cards here using your AJAX success function -->
+  </div>
+  
+  <div class="tinder--buttons">
+    <button id="nope"><i class="fa fa-remove"></i></button>
+    <button id="love"><i class="fa fa-heart"></i></button>
+  </div>
+</div>
 
 
             </div>
@@ -245,33 +255,21 @@
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    // Hide the loader
-                    $('#loader').hide();
-    
-                    // Clear previous summaries
-                    $('#summaryCard').empty();
+                $('#loader').hide();
+                var tinderCards = $('.tinder--cards');
+                tinderCards.empty(); // Clear previous cards
 
-                    // Process and display each chunk summary
-                    $.each(response.html_summaries, function(index, html_summary) {
-                        var summaryElement = $('<section>').html(html_summary);
-                        var copyButton = $('<button>').text('Copy').click(function() {
-                            var textToCopy = $(this).siblings('p').text();
-                            var tempElement = $("<textarea>");
-                            $("body").append(tempElement);
-                            tempElement.val(textToCopy).select();
-                            document.execCommand("copy");
-                            tempElement.remove();
-                            alert('Chunk copied to clipboard!');
-                        });
-                        summaryElement.append(copyButton);
-                        $('#summaryCard').append(summaryElement);
-                    });
-                    $('#summaryCard').show();
+                $.each(response.html_summaries, function(index, html_summary) {
+                    var cardElement = $('<div>').addClass('tinder--card');
+                    var summaryElement = $('<p>').html(html_summary);
+                    cardElement.append(summaryElement);
+                    tinderCards.append(cardElement);
+                });
 
-                    // Hide the global copy button and clear summary button if not needed
-                    $('#copyButton').hide();
-                    $('#clearSummaryButton').show();
-                },
+                initCards(); // Initialize the cards for swipe functionality
+                $('#summaryCard').show();
+            },
+
                 error: function() {
                     // Hide the loader in case of error
                     $('#loader').hide();
@@ -279,6 +277,39 @@
                 }
             });
         });
+            
+            function createButtonListener(love) {
+  return function (event) {
+    var cards = document.querySelectorAll('.tinder--card:not(.removed)');
+    if (!cards.length) return false;
+    var card = cards[0];
+
+    if (love) {
+      // Copy text logic
+      var textToCopy = card.querySelector('p').textContent;
+      var tempElement = document.createElement("textarea");
+      document.body.appendChild(tempElement);
+      tempElement.value = textToCopy;
+      tempElement.select();
+      document.execCommand("copy");
+      tempElement.remove();
+      alert('Text copied to clipboard!');
+    } else {
+      // Discard card logic
+      card.classList.add('removed');
+      card.style.transform = 'translate(-1000px, -100px) rotate(-30deg)';
+      tinderCards.append(card); // Move the card to the end of the deck
+    }
+
+    initCards(); // Re-initialize the cards
+    event.preventDefault();
+  };
+}
+
+// Bind listeners to buttons
+nope.addEventListener('click', createButtonListener(false));
+love.addEventListener('click', createButtonListener(true));
+
         
             // Custom upload button functionality
             $('#uploadButton').click(function() {
