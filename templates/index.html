@@ -229,8 +229,34 @@
                     'transform': 'scale(' + (100 - index * 10) / 100 + ')'
                 });
             });
+
+            // Bind click events to love and nope icons in each card
+            allCards.find('.fa-heart, .fa-remove').off('click').on('click', function(event) {
+                var isLove = $(this).hasClass('fa-heart');
+                var card = $(this).closest('.tinder--card');
+                handleCardAction(card, isLove);
+            });
         }
 
+        function handleCardAction(card, isLove) {
+            if (isLove) {
+                // Copy text logic
+                var textToCopy = card.find('p').text();
+                var tempElement = $("<textarea>");
+                $("body").append(tempElement);
+                tempElement.val(textToCopy).select();
+                document.execCommand("copy");
+                tempElement.remove();
+                alert('Text copied to clipboard!');
+            } else {
+                // Discard card logic
+                card.addClass('removed').css('transform', 'translate(-1000px, -100px) rotate(-30deg)');
+                $('.tinder--cards').append(card); // Move the card to the end of the deck
+            }
+            initCards(); // Re-initialize the cards
+        }
+
+        // Check for successful payment in the URL
         var urlParams = new URLSearchParams(window.location.search);
         var paymentSuccess = urlParams.get('payment_success');
 
@@ -283,37 +309,6 @@
             });
         });
 
-        function createButtonListener(love) {
-            return function(event) {
-                var cards = document.querySelectorAll('.tinder--card:not(.removed)');
-                if (!cards.length) return false;
-                var card = cards[0];
-
-                if (love) {
-                    var textToCopy = card.querySelector('p').textContent;
-                    var tempElement = document.createElement("textarea");
-                    document.body.appendChild(tempElement);
-                    tempElement.value = textToCopy;
-                    tempElement.select();
-                    document.execCommand("copy");
-                    tempElement.remove();
-                    alert('Text copied to clipboard!');
-                } else {
-                    card.classList.add('removed');
-                    card.style.transform = 'translate(-1000px, -100px) rotate(-30deg)';
-                    $('.tinder--cards').append(card);
-                }
-
-                initCards();
-                event.preventDefault();
-            };
-        }
-
-        var nope = document.getElementById('nope');
-        var love = document.getElementById('love');
-        nope.addEventListener('click', createButtonListener(false));
-        love.addEventListener('click', createButtonListener(true));
-
         $('#uploadButton').click(function() {
             $('#file').click();
         });
@@ -341,7 +336,6 @@
         });
     });
 </script>
-
 
  
 

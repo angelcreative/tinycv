@@ -451,6 +451,14 @@ aside.showCard {
 }
 
 
+
+
+.tinder {
+    width: 100%;
+    height: auto;
+    min-width: fit-content;
+}
+
 .tinder--card {
     position: absolute;
     top: 50%;
@@ -460,6 +468,79 @@ aside.showCard {
 }
 
 
+.tinder--cards {
+    position: relative;
+    height: min-content;
+}
+
+.tinder--card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #dae1ee;
+    left: 0;
+    top: 0;
+    padding: 30px;
+    box-shadow: 7px 3px 20px #A7B2C6, -3px -4px 18px #fff;
+    border-radius: 24px;
+    border: 1px solid #ffffff29;
+}
+
+
+.tinder--card i {
+    margin: 0 16px 0 0;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background: #fe7d7d;
+    padding: 10px 10px 10px 10px;
+    border-radius: 50%;
+    font-size: 17px;
+    text-align: center;
+    line-height: 1.2;
+    color: #fff;
+    border-top: 1px solid #ffffffd6;
+    box-shadow: 4px 4px 6px 1px rgb(185 194 212), -4px -3px 6px 1px rgb(255 255 255);
+    transition: background 300ms ease-in-out;
+}
+
+.tinder--card i:nth-child(2){
+    margin: 0 16px 0 0;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background: #7a89a2;
+    padding: 10px 10px 10px 10px;
+    border-radius: 50%;
+    font-size: 17px;
+    text-align: center;
+    line-height: 1.2;
+    color: #fff;
+    border-top: 1px solid #ffffffd6;
+    box-shadow: 4px 4px 6px 1px rgb(185 194 212), -4px -3px 6px 1px rgb(255 255 255);
+        transition: background 300ms ease-in-out;
+
+}
+
+
+
+.tinder--card i:hover {
+    background: red;
+}
+
+
+.tinder--card i:active {
+    background: #dc0404;
+}
+
+.tinder--card i:hover:nth-child(2){
+    background:#5f6c82;
+}
+
+.tinder--card i:active:nth-child(2){
+    background:#3f4b5d;
+}
 
     @media only screen and (max-width: 1025px) {
    body {background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 90% 100% no-repeat;
