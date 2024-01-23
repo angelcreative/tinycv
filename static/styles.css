@@ -19,6 +19,7 @@ body {
     flex-wrap: wrap;
     column-gap: 60px;
     margin: 50px auto;
+    z-index:1
 }
 
 .renderCVright {
@@ -381,11 +382,12 @@ img.loader {
 .slider {
     margin: 0;
     overflow: hidden;
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 260px;
     bottom: 0;
     padding-top: 28px;
+    z-index: 0
 }
 
 .slider::before, .slider::after {
@@ -395,6 +397,7 @@ img.loader {
     position: absolute;
     width: 100px;
     z-index: 2;
+    display: none;
 }
 
 .slider::after {
