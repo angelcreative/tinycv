@@ -250,7 +250,7 @@
                 tempElement.val(textToCopy).select();
                 document.execCommand("copy");
                 tempElement.remove();
-                alert('Text copied to clipboard!');
+                alert('📎 Summary copied to clipboard!');
             } else {
                 card.addClass('removed').css('transform', 'translate(-1000px, -100px) rotate(-30deg)');
                 $('.tinder--cards').append(card); // Move the card to the end of the deck
@@ -308,7 +308,7 @@
                 },
                 error: function() {
                     $('#loader').hide();
-                    alert('Error processing file.');
+                    alert('💔 Error processing file.');
                 }
             });
         });
