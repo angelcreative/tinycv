@@ -307,6 +307,7 @@ p.motto {
     content: "clear cards";
     right: -10px;
     top: -30px;
+    width: max-content;
 }
 
 
