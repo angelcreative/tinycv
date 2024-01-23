@@ -451,6 +451,16 @@ aside.showCard {
 }
 
 
+.tinder--card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* other styling */
+}
+
+
+
     @media only screen and (max-width: 1025px) {
    body {background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 90% 100% no-repeat;
           background-size: 230px;}
