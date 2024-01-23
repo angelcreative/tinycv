@@ -219,30 +219,42 @@
 
    <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Check for successful payment in the URL
-            var urlParams = new URLSearchParams(window.location.search);
-            var paymentSuccess = urlParams.get('payment_success');
-        
-             if (paymentSuccess) {
-                // Payment was successful
-                $('#file').prop('disabled', false);
-                $('#uploadButton').removeClass('disabled').css('cursor', 'pointer');
-                $('#submitCVButton').show().prop('disabled', false);
-                $('#buyNowButton').hide();
-            } else {
-                // Payment has not been made yet
-                $('#file').prop('disabled', true);
-                $('#uploadButton').addClass('disabled'); // Add 'disabled' class
-                $('#submitCVButton').hide().prop('disabled', true);
-        
-                $('#buyNowButton').show().click(function() {
-                    window.location.href = 'https://buy.stripe.com/eVacN18eE9At7jG145';
-                });
-            }
-        
-       $('#uploadForm').submit(function(e) {
+ <script>
+    $(document).ready(function() {
+        // Define the initCards function within the jQuery ready function
+        function initCards() {
+            var tinderCards = $('.tinder--cards');
+            var allCards = tinderCards.find('.tinder--card');
+
+            allCards.each(function(index, card) {
+                // Initialize each card here
+                // Example: setting zIndex
+                $(card).css('z-index', allCards.length - index);
+            });
+        }
+
+        // Check for successful payment in the URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var paymentSuccess = urlParams.get('payment_success');
+
+        if (paymentSuccess) {
+            // Payment was successful
+            $('#file').prop('disabled', false);
+            $('#uploadButton').removeClass('disabled').css('cursor', 'pointer');
+            $('#submitCVButton').show().prop('disabled', false);
+            $('#buyNowButton').hide();
+        } else {
+            // Payment has not been made yet
+            $('#file').prop('disabled', true);
+            $('#uploadButton').addClass('disabled'); // Add 'disabled' class
+            $('#submitCVButton').hide().prop('disabled', true);
+
+            $('#buyNowButton').show().click(function() {
+                window.location.href = 'https://buy.stripe.com/eVacN18eE9At7jG145';
+            });
+        }
+
+        $('#uploadForm').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
 
@@ -256,21 +268,20 @@
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                $('#loader').hide();
-                var tinderCards = $('.tinder--cards');
-                tinderCards.empty(); // Clear previous cards
+                    $('#loader').hide();
+                    var tinderCards = $('.tinder--cards');
+                    tinderCards.empty(); // Clear previous cards
 
-                $.each(response.html_summaries, function(index, html_summary) {
-                    var cardElement = $('<div>').addClass('tinder--card');
-                    var summaryElement = $('<p>').html(html_summary);
-                    cardElement.append(summaryElement);
-                    tinderCards.append(cardElement);
-                });
+                    $.each(response.html_summaries, function(index, html_summary) {
+                        var cardElement = $('<div>').addClass('tinder--card');
+                        var summaryElement = $('<p>').html(html_summary);
+                        cardElement.append(summaryElement);
+                        tinderCards.append(cardElement);
+                    });
 
-                initCards(); // Initialize the cards for swipe functionality
-                $('#summaryCard').show();
-            },
-
+                    initCards(); // Initialize the cards for swipe functionality
+                    $('#summaryCard').show();
+                },
                 error: function() {
                     // Hide the loader in case of error
                     $('#loader').hide();
@@ -278,70 +289,71 @@
                 }
             });
         });
-            
-            function createButtonListener(love) {
-  return function (event) {
-    var cards = document.querySelectorAll('.tinder--card:not(.removed)');
-    if (!cards.length) return false;
-    var card = cards[0];
 
-    if (love) {
-      // Copy text logic
-      var textToCopy = card.querySelector('p').textContent;
-      var tempElement = document.createElement("textarea");
-      document.body.appendChild(tempElement);
-      tempElement.value = textToCopy;
-      tempElement.select();
-      document.execCommand("copy");
-      tempElement.remove();
-      alert('Text copied to clipboard!');
-    } else {
-      // Discard card logic
-      card.classList.add('removed');
-      card.style.transform = 'translate(-1000px, -100px) rotate(-30deg)';
-      tinderCards.append(card); // Move the card to the end of the deck
-    }
+        function createButtonListener(love) {
+            return function(event) {
+                var cards = document.querySelectorAll('.tinder--card:not(.removed)');
+                if (!cards.length) return false;
+                var card = cards[0];
 
-    initCards(); // Re-initialize the cards
-    event.preventDefault();
-  };
-}
-
-// Bind listeners to buttons
-nope.addEventListener('click', createButtonListener(false));
-love.addEventListener('click', createButtonListener(true));
-
-        
-            // Custom upload button functionality
-            $('#uploadButton').click(function() {
-                $('#file').click();
-            });
-        
-            $('#file').change(function() {
-                if (this.files && this.files.length > 0) {
-                    $('#fileLoadedMessage').text(this.files[0].name + ' loaded').show();
+                if (love) {
+                    // Copy text logic
+                    var textToCopy = card.querySelector('p').textContent;
+                    var tempElement = document.createElement("textarea");
+                    document.body.appendChild(tempElement);
+                    tempElement.value = textToCopy;
+                    tempElement.select();
+                    document.execCommand("copy");
+                    tempElement.remove();
+                    alert('Text copied to clipboard!');
+                } else {
+                    // Discard card logic
+                    card.classList.add('removed');
+                    card.style.transform = 'translate(-1000px, -100px) rotate(-30deg)';
+                    tinderCards.append(card); // Move the card to the end of the deck
                 }
-            });
-        
-            // Copy button functionality
-            $('#copyButton').click(function() {
-                var textToCopy = $('#summaryCard').text();
-                var tempElement = $("<textarea>");
-                $("body").append(tempElement);
-                tempElement.val(textToCopy).select();
-                document.execCommand("copy");
-                tempElement.remove();
-                alert('Summary copied to clipboard!');
-            });
-        
-            // Clear summary button functionality
-            $('#clearSummaryButton').click(function() {
-                $('#summaryCard').empty().hide(); // Clear and hide the summary
-                $('#copyButton').hide(); // Hide the copy summary button
-                $(this).hide(); // Hide the clear summary button
-            });
+
+                initCards(); // Re-initialize the cards
+                event.preventDefault();
+            };
+        }
+
+        // Bind listeners to buttons
+        var nope = document.getElementById('nope');
+        var love = document.getElementById('love');
+        nope.addEventListener('click', createButtonListener(false));
+        love.addEventListener('click', createButtonListener(true));
+
+        // Custom upload button functionality
+        $('#uploadButton').click(function() {
+            $('#file').click();
         });
-    </script>
+
+        $('#file').change(function() {
+            if (this.files && this.files.length > 0) {
+                $('#fileLoadedMessage').text(this.files[0].name + ' loaded').show();
+            }
+        });
+
+        // Copy button functionality
+        $('#copyButton').click(function() {
+            var textToCopy = $('#summaryCard').text();
+            var tempElement = $("<textarea>");
+            $("body").append(tempElement);
+            tempElement.val(textToCopy).select();
+            document.execCommand("copy");
+            tempElement.remove();
+            alert('Summary copied to clipboard!');
+        });
+
+        // Clear summary button functionality
+        $('#clearSummaryButton').click(function() {
+            $('#summaryCard').empty().hide(); // Clear and hide the summary
+            $('#copyButton').hide(); // Hide the copy summary button
+            $(this).hide(); // Hide the clear summary button
+        });
+    });
+</script>
 
  
 
