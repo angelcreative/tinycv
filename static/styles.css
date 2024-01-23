@@ -126,6 +126,11 @@ padding-top: 38px;
     height: 40px;
 }
 
+#clearSummaryButton {
+position: absolute;
+    right: -16px;
+    top: -70px;}
+
 img.clearIcon {
     height: 20px;
     margin: 0 auto;
@@ -299,8 +304,9 @@ p.motto {
 } 
 
 #clearSummaryButton:hover::after {
-    content:"clear";
-    right:0px
+    content: "clear cards";
+    right: -20px;
+    top: -30px;
 }
 
 
