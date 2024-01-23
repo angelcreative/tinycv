@@ -93,7 +93,7 @@ padding-top: 38px;
     display: block;
     background: #dae1ee;
     border-radius: 50%;
-    padding: 5px 15px 10px 15px;
+    padding:10px 15px;
     border: 1px solid #dae1ee;
     color: #7e9bff;
       box-shadow: 7px 3px 20px #A7B2C6, -3px -4px 18px #fff;
@@ -574,8 +574,25 @@ aside.showCard {
     color: #738de5;
 }
 
-.fa-remove, .fa-heart {
-    position: relative;
+.fa-heart,
+.fa-remove {
+    position:absolute;
+      top:20px;
+}
+
+
+
+.fa-heart {
+  
+    left:20px
+}
+.fa-remove {
+    
+    left:80px
+}
+
+#summaryCard p {
+    padding-top:10px;
 }
 
     @media only screen and (max-width: 1025px) {
