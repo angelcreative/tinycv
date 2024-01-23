@@ -55,7 +55,8 @@
 
             <form id="uploadForm" enctype="multipart/form-data">
                 <input type="file" name="file" id="file" disabled="" style="visibility: hidden; height:1px;">
-                <div id="uploadButton" class="upload-btn disabled" disabled="">Upload your resume <span class="arrowUp">↑</span></div>
+                <div id="uploadButton" class="upload-btn disabled" disabled="">Upload your resume <span class="arrowUp"><i class="fa fa-arrow-up" aria-hidden="true"></i>
+</span></div>
                 <p id="fileLoadedMessage" style="display:none;"></p>
                 <button type="submit" id="submitCVButton" disabled="" style="display:none;">Make my TinyCV! ✨</button>
                 <button id="buyNowButton">Make my TinyCV 2,77€</button>
@@ -228,6 +229,9 @@
                     'z-index': allCards.length - index,
                     'transform': 'scale(' + (100 - index * 10) / 100 + ')'
                 });
+
+                // Hide the 'nope' icon if it's the only card left
+                $(card).find('.fa-remove').css('display', allCards.length > 1 ? 'block' : 'none');
             });
 
             // Bind click events to love and nope icons in each card
@@ -240,7 +244,6 @@
 
         function handleCardAction(card, isLove) {
             if (isLove) {
-                // Copy text logic
                 var textToCopy = card.find('p').text();
                 var tempElement = $("<textarea>");
                 $("body").append(tempElement);
@@ -249,14 +252,12 @@
                 tempElement.remove();
                 alert('Text copied to clipboard!');
             } else {
-                // Discard card logic
                 card.addClass('removed').css('transform', 'translate(-1000px, -100px) rotate(-30deg)');
                 $('.tinder--cards').append(card); // Move the card to the end of the deck
             }
             initCards(); // Re-initialize the cards
         }
 
-        // Check for successful payment in the URL
         var urlParams = new URLSearchParams(window.location.search);
         var paymentSuccess = urlParams.get('payment_success');
 
@@ -336,6 +337,7 @@
         });
     });
 </script>
+
 
  
 
