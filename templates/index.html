@@ -275,42 +275,42 @@
             });
         }
 
-        $('#uploadForm').submit(function(e) {
-            e.preventDefault();
-            var formData = new FormData(this);
-            $('#loader').show();
+       $('#uploadForm').submit(function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    $('#loader').show();
 
-            $.ajax({
-                url: '/upload',
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    $('#loader').hide();
-                    var tinderCards = $('.tinder--cards');
-                    tinderCards.empty();
+    $.ajax({
+        url: '/upload',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            $('#loader').hide();
+            var tinderCards = $('.tinder--cards');
+            tinderCards.empty();
 
-                    $.each(response.html_summaries, function(index, html_summary) {
-                        var cardElement = $('<div>').addClass('tinder--card');
-                        var summaryElement = $('<p>').html(html_summary);
-                        var loveIcon = $('<i>').addClass('fa fa-heart');
-                        var nopeIcon = $('<i>').addClass('fa fa-remove');
-                        cardElement.append(loveIcon, nopeIcon, summaryElement);
-                        tinderCards.append(cardElement);
-                    });
-
-                    initCards();
-                    $('#summaryCard').show();
-                    
-                }
-                },
-                error: function() {
-                    $('#loader').hide();
-                    alert('💔 Error processing file.');
-                }
+            $.each(response.html_summaries, function(index, html_summary) {
+                var cardElement = $('<div>').addClass('tinder--card');
+                var summaryElement = $('<p>').html(html_summary);
+                var loveIcon = $('<i>').addClass('fa fa-heart');
+                var nopeIcon = $('<i>').addClass('fa fa-remove');
+                cardElement.append(loveIcon, nopeIcon, summaryElement);
+                tinderCards.append(cardElement);
             });
-        });
+
+            initCards();
+            $('#summaryCard').show();
+        },
+        error: function() {
+            $('#loader').hide();
+            alert('💔 Error processing file.');
+        }
+    });
+});
+
+
 
         $('#uploadButton').click(function() {
             $('#file').click();
