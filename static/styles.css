@@ -305,7 +305,7 @@ p.motto {
 
 #clearSummaryButton:hover::after {
     content: "clear cards";
-    right: -20px;
+    right: -10px;
     top: -30px;
 }
 
