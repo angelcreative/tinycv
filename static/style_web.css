@@ -1,0 +1,105 @@
+
+body {
+    font-size: 1rem;
+    font-family: arial, sans-serif;
+    background-color: #e6e6dc;
+    color:#575454;
+    margin: 0;
+}
+
+body.light-theme {
+    background-color: #fff;
+    color: #999;
+}
+body.dark-theme {
+    background-color: #333;
+    color: #fff;
+}
+.heroSection {
+    height: 600px;
+    background-size: cover;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    margin-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.resume {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    min-width: 360px;
+    text-align: left;
+}
+
+.resume-content {
+    width: 860px;
+    margin: 0 auto;
+    background: #f1f1f1;
+    padding: 40px;
+    border-radius: 20px;
+}
+
+
+
+h1 {
+    color: #fff;
+    font-size: 60px;
+}
+
+h2 {
+    color: #fff;
+    font-size: 36px;
+}
+.resume-content h1, .resume-content h2 { 
+color:#585858;
+    font-size:24px
+}
+
+p {
+    line-height: 1.5;
+}
+
+.videoOverlay {
+    background: #4945457d;
+    text-align: center;
+    padding: 40px;
+    max-width: fit-content;
+    margin: 0 auto;
+    border-radius: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+video {
+    position: absolute;
+    object-fit: cover;
+    overflow: clip;
+}
+footer {
+    height: 130px;
+    text-align: center;
+    background: #585858 url(../static/img/placeholder.png) center bottom no-repeat;
+    background-size:130px;
+    padding: 40px;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0 0 0;
+   
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}

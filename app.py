@@ -11,6 +11,8 @@ import logging
 import json
 import PyPDF2
 import re
+from hashlib import sha256
+import time
 from io import BytesIO
 from dotenv import load_dotenv
 load_dotenv()  # This loads the environment variables from the .env file
@@ -46,10 +48,56 @@ def preprocess_text(text):
 
     return text
 
+
+def extract_summary(text):
+    # Example: Extract summary based on a pattern or keyword
+    match = re.search(r'Summary:([\s\S]*?)(?=\n\w+:)', text)
+    return match.group(1).strip() if match else "Summary Not Found"
+
+def extract_experience(text):
+    # Example: Extract experience section
+    match = re.search(r'Experience:([\s\S]*?)(?=\n\w+:)', text)
+    return match.group(1).strip() if match else "Experience Not Found"
+
+def extract_education(text):
+    # Example: Extract education details
+    match = re.search(r'Education:([\s\S]*?)(?=\n\w+:)', text)
+    return match.group(1).strip() if match else "Education Not Found"
+
+def extract_contact(text):
+    # Example: Extract contact information
+    # This is highly variable and might need a more complex approach
+    match = re.search(r'Contact:([\s\S]*?)(?=\n\w+:)', text)
+    return match.group(1).strip() if match else "Contact Info Not Found"
+
+def extract_name(text):
+    # Example: Extract the name using a pattern
+    match = re.search(r'^[A-Z][a-z]*\s[A-Z][a-z]*', text)
+    return match.group() if match else "Name Not Fytound"
+
 extracted_text = "This is an example text with  extra   spaces   and special characters !@#$."
 cleaned_text = preprocess_text(extracted_text)
 print(cleaned_text)
     
+def extract_resume_data(resume_file):
+    extracted_text = extract_text_from_pdf(resume_file)
+    preprocessed_text = preprocess_text(extracted_text)
+
+    name = extract_name(preprocessed_text)
+    summary = extract_summary(preprocessed_text)
+    experience = extract_experience(preprocessed_text)
+    education = extract_education(preprocessed_text)
+    contact = extract_contact(preprocessed_text)
+
+    return name, summary, experience, education, contact
+
+# Example function to extract name - this will need specific logic based on your resume formats
+def extract_name(text):
+    # Implement logic to find and return the name, e.g., using regular expressions
+    pass
+
+
+# Similarly, implement extract_summary, extract_experience, extract_education, and extract_contact
 
 
 def summarize_text_with_openai(text):
@@ -116,6 +164,7 @@ def upload_file():
         text_chunks = split_text(preprocessed_text, max_length)
 
         final_summaries = []
+        concatenated_summaries = ""
         for chunk in text_chunks:
             result = summarize_text_with_openai(chunk)
             if result["summary"]:
@@ -126,11 +175,118 @@ def upload_file():
 
         return jsonify({"html_summaries": final_summaries or ["No summary available."]})
 
+        action = request.form.get('action', 'summary')
+        if action == 'summary':
+                return jsonify({"html_summaries": final_summaries})
+        else:
+            # Generate website content
+            website_details = parse_website_content(concatenated_summaries)
+            background_image = fetch_pexels_image('1422286')
+            return render_template('generated_website.html', **website_details, background_image=background_image)
+
     except Exception as e:
         print(f"Error occurred: {e}")
         return jsonify({"error": str(e)}), 500
 
 
 
+def fetch_pexels_video(video_id):
+    api_key = 'ol6Ck5mBAkKtOOnWrTQ4CyyIquNlS54c9EOv0L0MhLp7wNoe0vaHVKw7'
+    url = f'https://api.pexels.com/videos/videos/{video_id}'
+    headers = {'Authorization': api_key}
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code == 200:
+        video_data = response.json()
+        video_url = video_data['video_files'][0]['link']  # Choose appropriate quality
+        return video_url
+    else:
+        return 'default_video_url'  # Provide a default video URL in case of failure
+
+
+def parse_website_content(content):
+    structured_content = ""
+    lines = content.split('\n')
+
+    for line in lines:
+        if line.endswith(':'):  # Simple check for headers
+            structured_content += f"<h2>{line}</h2>"
+        elif line.startswith('- '):  # Simple check for list items
+            structured_content += f"<ul><li>{line[2:]}</li></ul>"
+        else:
+            structured_content += f"<p>{line}</p>"
+
+    return structured_content
+
+
+
+# Function to extract the first name
+def extract_first_name(text):
+    match = re.search(r"\b[A-Z][a-z]*\b", text)
+    return match.group() if match else "Name Not Found"
+
+@app.route('/generate_website', methods=['POST'])
+def generate_website():
+    try:
+        resume_file = request.files['resume_file']
+        extracted_text = extract_text_from_pdf(resume_file)
+        preprocessed_text = preprocess_text(extracted_text)
+
+        # Extract the first name for the header
+        first_name = extract_first_name(preprocessed_text)
+
+        # Modify your OpenAI prompt for English B2 professional tone
+        prompt = f"Please create a website content in a professional English tone, B-2 level English, summarize the content to make it semantic and easy to read and digest from this resume:\n\n{preprocessed_text}"
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=1000,
+        )
+
+        ai_generated_content = response.choices[0].message.content.strip()
+
+        # Render the webpage
+        structured_content = parse_website_content(ai_generated_content)
+                # Generate a unique slug
+          # Generate a unique slug
+        # Generate a unique slug
+        slug = sha256(ai_generated_content.encode()).hexdigest()[:10] + str(int(time.time()))
+
+        # Fetch the background video URL
+        background_video = fetch_pexels_video('853789')
+
+        # Render the webpage with full structure
+        full_html_content = render_template('generated_website.html', name=first_name, content=structured_content, background_video=background_video)
+
+        # Save the generated content to a file
+        filepath = f"generated_websites/{slug}.html"
+        with open(filepath, "w") as file:
+            file.write(full_html_content)
+
+        # Construct the URL for the generated website (not using 'static')
+        generated_url = f"{request.url_root}generated_websites/{slug}"
+
+        # Return the URL in the response
+        return jsonify({"url": generated_url})
+
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/generated_websites/<slug>')
+def generated_website(slug):
+    try:
+        with open(f"generated_websites/{slug}.html", "r") as file:
+            content = file.read()
+        return content
+    except IOError:
+        return "Not Found", 404
+
+    
+    
 if __name__ == '__main__':
     app.run(debug=True)

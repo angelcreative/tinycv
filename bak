@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume</title>
+        <link rel="stylesheet" type="text/css" href="../static/style_web.css">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../static/img/ico.png">
+
+    <meta name="description" itemprop="description" content="Whip up a charming, compact resume in just a few seconds - it's super quick and easy!">
+    <meta name="keywords" content="cv, resume, work, experience, portfolio, connect, job, hiring">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@angelcreative">
+    <meta name="twitter:creator" content="@angelcreative">
+    <meta name="twitter:title" content="TinyCV - The Smallest CV You'll Ever Need">
+    <meta name="twitter:description" content="Whip up a charming, compact resume in just a few seconds - it's super quick and easy!.">
+    <meta name="twitter:image" content="https://www.tinycv.onrender.com/static/img/promo.png">
+    <meta property="og:url" content="https://www.tinycv.onrender.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Whip up a charming, compact resume in just a few seconds - it's super quick and easy!">
+    <meta property="og:image" content="https://www.tinycv.onrender.com/static/img/promo.png">
+    <meta property="og:image:alt" content="Whip up a charming, compact resume in just a few seconds - it's super quick and easy!">
+    <meta property="og:locale" content="en_IE">
+    <meta property="og:title" content="TinycCV | The Smallest CV You'll Ever Need">
+    <meta property="og:site_name" content="tinycv">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <link rel="canonical" href="https://www.tinycv.onrender.com">
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <!-- Your head content here (e.g., title, meta, CSS links) -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="light-theme">
+    <header class="heroSection">
+   <video autoplay muted loop id="myVideo" style="width:100%; height: auto;">
+            <source src="{{ background_video }}" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="videoOverlay">
+            <!-- Hero section content -->
+            <h1>My Personal Website</h1>
+            <h2>{{ name }}</h2>
+        </div>
+    </header>
+    <main class="resume-content">
+    {{ content | safe }}
+</main>
+    <!-- Remaining HTML content -->
+    <footer>
+       <p> Build with ♥️ by <a href="https://tinycv.onrender.com" target="_blank">TinyCV</a></p>
+    </footer>
+</body>
+</html>
+
+
+from flask import Flask, jsonify, request, render_template, Response, redirect, url_for, session, flash
+from flask_cors import CORS
+import hmac
+import hashlib
+import requests
+import bcrypt
+import os
+import uuid
+import random
+import logging
+import json
+import PyPDF2
+import re
+from io import BytesIO
+from dotenv import load_dotenv
+load_dotenv()  # This loads the environment variables from the .env file
+from openai import OpenAI
+openai_api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=openai_api_key)
+
+
+
+app = Flask(__name__)
+CORS(app)
+
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Max file size: 16 MB
+
+
+
+def extract_text_from_pdf(file):
+    with BytesIO() as temp_buffer:
+        temp_buffer.write(file.read())
+        reader = PyPDF2.PdfReader(temp_buffer)
+        text = ""
+        for page in reader.pages:
+            page_text = page.extract_text()
+            text += page_text + "\n"
+        return text
+    
+def preprocess_text(text):
+    # Remove extra whitespace
+    text = ' '.join(text.split())
+
+    # Remove special characters and non-alphanumeric characters
+    text = re.sub(r'[^a-zA-Z0-9\s]', '', text)
+
+    return text
+
+
+def extract_summary(text):
+    # Example: Extract summary based on a pattern or keyword
+    match = re.search(r'Summary:([\s\S]*?)(?=\n\w+:)', text)
+    return match.group(1).strip() if match else "Summary Not Found"
+
+def extract_experience(text):
+    # Example: Extract experience section
+    match = re.search(r'Experience:([\s\S]*?)(?=\n\w+:)', text)
+    return match.group(1).strip() if match else "Experience Not Found"
+
+def extract_education(text):
+    # Example: Extract education details
+    match = re.search(r'Education:([\s\S]*?)(?=\n\w+:)', text)
+    return match.group(1).strip() if match else "Education Not Found"
+
+def extract_contact(text):
+    # Example: Extract contact information
+    # This is highly variable and might need a more complex approach
+    match = re.search(r'Contact:([\s\S]*?)(?=\n\w+:)', text)
+    return match.group(1).strip() if match else "Contact Info Not Found"
+
+def extract_name(text):
+    # Example: Extract the name using a pattern
+    match = re.search(r'^[A-Z][a-z]*\s[A-Z][a-z]*', text)
+    return match.group() if match else "Name Not Found"
+
+extracted_text = "This is an example text with  extra   spaces   and special characters !@#$."
+cleaned_text = preprocess_text(extracted_text)
+print(cleaned_text)
+    
+def extract_resume_data(resume_file):
+    extracted_text = extract_text_from_pdf(resume_file)
+    preprocessed_text = preprocess_text(extracted_text)
+
+    name = extract_name(preprocessed_text)
+    summary = extract_summary(preprocessed_text)
+    experience = extract_experience(preprocessed_text)
+    education = extract_education(preprocessed_text)
+    contact = extract_contact(preprocessed_text)
+
+    return name, summary, experience, education, contact
+
+# Example function to extract name - this will need specific logic based on your resume formats
+def extract_name(text):
+    # Implement logic to find and return the name, e.g., using regular expressions
+    pass
+
+
+# Similarly, implement extract_summary, extract_experience, extract_education, and extract_contact
+
+
+def summarize_text_with_openai(text):
+    try:
+        prompt = f"Create a brief summary in the first person for a resume with the following structure, within 230 characters: 'Hello 👋🏼 I'm a [summary section] [latest 3 jobs] [3 top skills] [languages if any] #tinycv #resume #opentowork'. Resume details:\n\n{text}"
+        response = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant that creates brief first-person resume summaries within 240 characters."},
+        {"role": "user", "content": prompt}
+    ],
+    max_tokens=240,
+)
+
+        print("API Response:", response)  # Log the full response
+        summary = response.choices[0].message.content.strip()
+        return {"summary": summary, "error": None}
+    except Exception as e:
+        print("Error in API call:", str(e))  # Log the error
+        return {"summary": None, "error": str(e)}
+
+
+
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+def split_text(text, max_length):
+    """
+    Splits text into chunks where each chunk has a length less than or equal to max_length.
+    """
+    words = text.split()
+    chunks = []
+    current_chunk = []
+    current_length = 0
+
+    for word in words:
+        if current_length + len(word) > max_length:
+            chunks.append(' '.join(current_chunk))
+            current_chunk = [word]
+            current_length = len(word)
+        else:
+            current_chunk.append(word)
+            current_length += len(word) + 1  # Add 1 for space
+
+    if current_chunk:
+        chunks.append(' '.join(current_chunk))
+
+    return chunks
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    try:
+        if 'file' not in request.files:
+            return jsonify({"error": "No file part"}), 400
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({"error": "No selected file"}), 400
+
+        extracted_text = extract_text_from_pdf(file)
+        preprocessed_text = preprocess_text(extracted_text)
+        max_length = 1000
+        text_chunks = split_text(preprocessed_text, max_length)
+
+        final_summaries = []
+        concatenated_summaries = ""
+        for chunk in text_chunks:
+            result = summarize_text_with_openai(chunk)
+            if result["summary"]:
+                final_summaries.append(f'<section><p>{result["summary"]}</p></div></section>')
+            else:
+                error_message = result["error"] or "No summary available for this section."
+                final_summaries.append(f'<section><p>{error_message}</p></section>')
+
+        return jsonify({"html_summaries": final_summaries or ["No summary available."]})
+
+        action = request.form.get('action', 'summary')
+        if action == 'summary':
+                return jsonify({"html_summaries": final_summaries})
+        else:
+            # Generate website content
+            website_details = parse_website_content(concatenated_summaries)
+            background_image = fetch_pexels_image('1422286')
+            return render_template('generated_website.html', **website_details, background_image=background_image)
+
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+
+def fetch_pexels_video(video_id):
+    api_key = 'ol6Ck5mBAkKtOOnWrTQ4CyyIquNlS54c9EOv0L0MhLp7wNoe0vaHVKw7'
+    url = f'https://api.pexels.com/videos/videos/{video_id}'
+    headers = {'Authorization': api_key}
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code == 200:
+        video_data = response.json()
+        video_url = video_data['video_files'][0]['link']  # Choose appropriate quality
+        return video_url
+    else:
+        return 'default_video_url'  # Provide a default video URL in case of failure
+
+
+def parse_website_content(content):
+    structured_content = ""
+    lines = content.split('\n')
+
+    for line in lines:
+        if line.endswith(':'):  # Simple check for headers
+            structured_content += f"<h2>{line}</h2>"
+        elif line.startswith('- '):  # Simple check for list items
+            structured_content += f"<ul><li>{line[2:]}</li></ul>"
+        else:
+            structured_content += f"<p>{line}</p>"
+
+    return structured_content
+
+
+
+# Function to extract the first name
+def extract_first_name(text):
+    match = re.search(r"\b[A-Z][a-z]*\b", text)
+    return match.group() if match else "Name Not Found"
+
+@app.route('/generate_website', methods=['POST'])
+def generate_website():
+    try:
+        resume_file = request.files['resume_file']
+        extracted_text = extract_text_from_pdf(resume_file)
+        preprocessed_text = preprocess_text(extracted_text)
+
+        # Extract the first name for the header
+        first_name = extract_first_name(preprocessed_text)
+
+        # Modify your OpenAI prompt for English B2 professional tone
+        prompt = f"Please create a website content in a professional English tone, B-2 level English, summarize the content to make it semantic and easy to read and digest from this resume:\n\n{preprocessed_text}"
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=1000,
+        )
+
+        ai_generated_content = response.choices[0].message.content.strip()
+
+        # Render the webpage
+        structured_content = parse_website_content(ai_generated_content)
+        return render_template('generated_website.html', name=first_name, content=structured_content, background_video=fetch_pexels_video('853789'))
+
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+
+    
+    
+if __name__ == '__main__':
+    app.run(debug=True)
