@@ -190,9 +190,15 @@ def upload_file():
 
 
 
-def fetch_pexels_video(video_id):
+def fetch_pexels_video():
+    # List of video IDs
+    video_ids = ['853789', '853870', '853797', '7655497', '4629264', '7437509', '6193202', '7437144', '853878', '901234']
+    
+    # Select a random video ID from the list
+    selected_video_id = random.choice(video_ids)
+
     api_key = 'ol6Ck5mBAkKtOOnWrTQ4CyyIquNlS54c9EOv0L0MhLp7wNoe0vaHVKw7'
-    url = f'https://api.pexels.com/videos/videos/{video_id}'
+    url = f'https://api.pexels.com/videos/videos/{selected_video_id}'
     headers = {'Authorization': api_key}
     response = requests.get(url, headers=headers)
     
@@ -202,7 +208,6 @@ def fetch_pexels_video(video_id):
         return video_url
     else:
         return 'default_video_url'  # Provide a default video URL in case of failure
-
 
 def parse_website_content(content):
     structured_content = ""
@@ -224,6 +229,20 @@ def parse_website_content(content):
 def extract_first_name(text):
     match = re.search(r"\b[A-Z][a-z]*\b", text)
     return match.group() if match else "Name Not Found"
+
+def parse_links_and_emails(text):
+    # Regular expression patterns for URLs and email addresses
+    url_pattern = r'(https?://[^\s]+|www\.[^\s]+)'
+    email_pattern = r'([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)'
+
+    # Replace URLs with anchor tags, adding 'http://' prefix if missing
+    text = re.sub(url_pattern, lambda x: '<a href="{}{}">{}</a>'.format('' if x.group().startswith('http') else 'http://', x.group(), x.group()), text)
+
+    # Replace emails with mailto links
+    text = re.sub(email_pattern, r'<a href="mailto:\1">\1</a>', text)
+
+    return text
+
 
 @app.route('/generate_website', methods=['POST'])
 def generate_website():
@@ -247,19 +266,33 @@ def generate_website():
         )
 
         ai_generated_content = response.choices[0].message.content.strip()
+         # Process links and emails
+        # Process links and emails
+        processed_content = parse_links_and_emails(ai_generated_content)
 
-        # Render the webpage
-        structured_content = parse_website_content(ai_generated_content)
-                # Generate a unique slug
-          # Generate a unique slug
+# Render the webpage with processed content
+        structured_content = parse_website_content(processed_content)
+    
+        # Generate AI-based header title
+        header_prompt = f"Generate a dynamic header title starting with 'I am a' based on the following resume content:\n\n{processed_content}"
+        header_response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a creative assistant."},
+                {"role": "user", "content": header_prompt}
+            ],
+            max_tokens=50
+)
+        header_title = header_response.choices[0].message.content.strip()
+    
         # Generate a unique slug
         slug = sha256(ai_generated_content.encode()).hexdigest()[:10] + str(int(time.time()))
 
         # Fetch the background video URL
-        background_video = fetch_pexels_video('853789')
+        background_video = fetch_pexels_video()
 
         # Render the webpage with full structure
-        full_html_content = render_template('generated_website.html', name=first_name, content=structured_content, background_video=background_video)
+        full_html_content = render_template('generated_website.html', header_title=header_title, content=structured_content, background_video=background_video)
 
         # Save the generated content to a file
         filepath = f"generated_websites/{slug}.html"

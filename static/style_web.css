@@ -4,7 +4,7 @@ body {
     font-family: arial, sans-serif;
     background-color: #e6e6dc;
     color:#575454;
-    margin: 0;
+    margin: 0 auto;
 }
 
 body.light-theme {
@@ -15,8 +15,21 @@ body.dark-theme {
     background-color: #333;
     color: #fff;
 }
+
+
+.bigBody {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 800px;
+    justify-content: center;
+    margin: 20px auto 0 auto;
+    align-items: flex-start;
+    position: relative;
+    padding: 0;
+}
+
 .heroSection {
-    height: 600px;
     background-size: cover;
     text-align: center;
     display: flex;
@@ -24,9 +37,12 @@ body.dark-theme {
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    margin-bottom: 60px;
     position: relative;
     overflow: hidden;
+    z-index: 5;
+    width: 400px;
+    margin: 216px -90px 0 0;
+    font-family: 'Lora', serif;
 }
 
 .resume {
@@ -42,49 +58,66 @@ body.dark-theme {
 }
 
 .resume-content {
-    width: 860px;
+    width: 320px;
     margin: 0 auto;
-    background: #f1f1f1;
-    padding: 40px;
-    border-radius: 20px;
+    background: #ffffff;
+    padding: 40px 40px 40px 100px;
+    position: relative;
+    z-index: 1;
+    color: #424242;
+    max-height: 87vh;
+    overflow: hidden;
 }
 
 
 
 h1 {
-    color: #fff;
-    font-size: 60px;
+    color: #000;
+    font-size: 32px;
 }
 
 h2 {
     color: #fff;
     font-size: 36px;
 }
-.resume-content h1, .resume-content h2 { 
-color:#585858;
-    font-size:24px
-}
+.resume-content h1, .resume-content h2 {color: #000000;font-size: 60px;}
+.resume-content h1 {
+    font-family: 'Poppins', sans-serif;
 
-p {
-    line-height: 1.5;
+}
+li {
+    font-family: 'Montserrat', sans-serif;
+    list-style-type: square;
+}
+.resume-content p {
+    line-height: 1.8;
+    font-family: 'Montserrat', sans-serif;
+    color: #424242;
+    font-size: 16px;
+    font-weight: 600;
+    word-break: break-word;
 }
 
 .videoOverlay {
-    background: #4945457d;
-    text-align: center;
-    padding: 40px;
-    max-width: fit-content;
+    text-align: left;
     margin: 0 auto;
-    border-radius: 20px;
+    border-radius: 0;
     position: relative;
-    z-index: 1;
+    background: #f4ece6;
+    padding: 40px;
+    font-family: 'Lora', serif;
 }
 
 video {
     position: absolute;
     object-fit: cover;
-    overflow: clip;
+    overflow: visible;
+    z-index: 0;
+    top: 0;
+    left: 0;
 }
+
+.contentSafe {max-height: 70vh;overflow: scroll;}
 footer {
     height: 130px;
     text-align: center;
@@ -97,6 +130,28 @@ footer {
     align-items: center;
     margin: 40px 0 0 0;
    
+}
+.contentSafe h2 {
+    font-size: 25px;
+    font-family: 'Lora', serif;
+}
+
+.contentSafe 
+    a {
+    color: #725640;
+    text-decoration: none;
+    border-bottom: 3px solid #f4ece6;
+}
+
+.softer {
+    height: 260px;
+    display: block;
+    position: absolute;
+    width: 320px;
+    background: linear-gradient(0deg, white, transparent);
+    bottom: 0;
+    z-index: 1;
+    top: 66vh;
 }
 
 footer a {
