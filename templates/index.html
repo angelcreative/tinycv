@@ -60,14 +60,15 @@
                 <p id="fileLoadedMessage" style="display:none;"></p>
                 <button type="submit" id="submitCVButton" disabled="" style="display:none;">Make my TinyCV! ✨</button>
                 <button id="buyNowButton">Make my TinyCV 2,77€</button>
-                <p class="motto">Perfectly crafted for sharing on social media platforms, it's the ideal way to showcase your professional profile with ease and style.</p>
+               
+            </form>
+
+                <button id="generateWebsiteBtn">Make Website</button>
+
+ <p class="motto">Perfectly crafted for sharing on social media platforms, it's the ideal way to showcase your professional profile with ease and style.</p>
                 <div class="logos">
                     <img src="../static/img/linkedin.svg"><img src="../static/img/xing.svg"><img src="../static/img/x.svg">
                 </div>
-            </form>
-
-
-
 
 
         </section>
@@ -90,12 +91,21 @@
 
             </div>
             <div id="loader" style="display: none;">
-                <p>Building your tiny cv...</p>
+              
+                   <div class="marquee">
+    <div class="marquee-content">
+                    <span>Building your cv...</span>
+                
+                    </div>
+</div>
+                    
                 <img class="loader" src="../static/img/loader.svg" alt="Loading..."></div>
 
             <div class="buttonAction">
                 <button id="copyButton" style="display:none;"><img src="../static/img/copy.svg" class="clearIcon"></button>
 <button id="clearSummaryButton" style="display:none;"><img class="clearIcon" src="../static/img/broom.svg"></button>
+                
+
             </div>
 
 
@@ -338,6 +348,35 @@
             $(this).hide();
         });
     });
+     
+
+
+document.getElementById("generateWebsiteBtn").addEventListener("click", function() {
+    var formData = new FormData();
+    formData.append('resume_file', $('#file')[0].files[0]);
+    $('#loader').show(); // Show the loader
+
+   $.ajax({
+    url: '/generate_website',
+    type: 'POST',
+    data: formData,
+    contentType: false,
+    processData: false,
+    success: function(response) {
+        $('#loader').hide(); // Hide the loader when new window opens
+        // Open the generated website URL in a new tab
+        window.open(response.url, '_blank');
+    },
+    error: function() {
+        $('#loader').hide(); // Also hide the loader in case of an error
+        alert('Error in generating website.');
+    }
+});
+
+});
+
+
+
 </script>
 
 

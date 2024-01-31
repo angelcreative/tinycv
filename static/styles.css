@@ -261,7 +261,7 @@ p.motto {
     flex-direction: column;
     box-shadow: 0px 0px 20px 0px #b3c5e77d;
     border: 1px solid #ffffff54;
-    z-index: 9
+    z-index: 999
 }
 
 
@@ -383,6 +383,41 @@ img.loader {
     color: #7e9bff;
     text-decoration: none;
 }
+
+
+.marquee {
+   overflow: hidden;
+   position: relative;
+   width: 80%;
+}
+
+.marquee-content {
+        display: flex;
+        animation: marquee 10s linear infinite;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+}
+
+.marquee-content span {
+    opacity: 0;
+    animation: fadeInOut 10s linear infinite;
+    min-width: fit-content;
+    text-align: center;
+}
+
+@keyframes marquee {
+    0%   { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+@keyframes fadeInOut {
+    0%   { opacity: 0; }
+    25%  { opacity: 1; }
+    75%  { opacity: 0; }
+    100% { opacity: 0; }
+}
+
 
 .slider {
     margin: 0;
