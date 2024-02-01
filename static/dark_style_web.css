@@ -37,7 +37,6 @@ body.dark-theme {
     align-content: center;
     justify-content: center;
     position: relative;
-    overflow: hidden;
     z-index: 5;
     width: 400px;
     margin: 216px -90px 0 0;
@@ -63,7 +62,7 @@ body.dark-theme {
     padding: 40px 40px 40px 100px;
     position: relative;
     z-index: 1;
-    color: #ffffff;
+    color:#cfd1e0;
     max-height: 87vh;
     overflow: hidden;
 }
@@ -82,11 +81,13 @@ h2 {
 .resume-content h1, .resume-content h2 {color: #ffffff;font-size: 60px;}
 .resume-content h1 {
     font-family: 'Poppins', sans-serif;
+margin:0;
 
 }
 li {
     font-family: 'Montserrat', sans-serif;
     list-style-type: square;
+    line-height: 1.5;
 }
 .resume-content p {
     line-height: 1.8;
@@ -115,6 +116,7 @@ video {
     top: 0;
     left: 0;
         filter: blur(5px);
+     width: 100%;
 }
 
 .contentSafe {max-height: 70vh;overflow: scroll;}
@@ -144,14 +146,14 @@ footer {
 }
 
 .softer {
-    height: 260px;
+    height: 40px;
     display: block;
     position: absolute;
     width: 320px;
     background: linear-gradient(0deg, #21212a, transparent);
     bottom: 0;
     z-index: 1;
-    top: 66vh;
+    top: 80vh;
 }
 
 footer a {
@@ -206,6 +208,21 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+.avatar {
+height: 150px;
+    width: 150px;
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    margin-left: -25%;
+    z-index: 9;
+    border-radius: 50%;
+    background: #21212a;
+    border: 10px solid white;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
 
 /* Rounded sliders */
 .slider.round {
@@ -233,4 +250,27 @@ input:checked + .slider:before {
   animation-duration: 4s;
   animation-iteration-count: infinite;
   transform-origin: 70% 70%;  /* Adjust as needed */
+}
+
+@media only screen and (max-width: 600px) {
+  .heroSection {
+   width: 100%;
+    margin: 216px 0 0 0;
+
+  }
+    
+    
+.resume-content {
+    width: 100%;
+    
+    padding: 20px;
+    
+    max-height: fit-content;
+    
+}
+    
+    
+.contentSafe {height: auto;overflow: scroll;}
+
+
 }

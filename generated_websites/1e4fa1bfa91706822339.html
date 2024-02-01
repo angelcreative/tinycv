@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Resume</title>
-<link id="theme-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='style_web.css') }}">
+<link id="theme-stylesheet" rel="stylesheet" href="/static/style_web.css">
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,13 +40,13 @@
     <div class="bigBody">
     <header class="heroSection">
    <div id="avatar" class="avatar">
-    {% if avatar_url %}
-        <img src="{{ avatar_url }}" alt="User Avatar">
-    {% endif %}
+    
+        <img src="https://i.ibb.co/52VdGzN/dreadlocked-man.png" alt="User Avatar">
+    
 </div>
         <div class="videoOverlay">
             <!-- Hero section content -->
-            <h1>{{ header_title }}</h1>
+            <h1>I am a Creative and Organized Graphic Designer with a Passion for Perfection</h1>
          <!-- Toggle Switch -->
 <label class="switch">
   <input type="checkbox" id="theme-toggle">
@@ -60,13 +60,13 @@
     <main class="resume-content">
         <h1>Hello <span class="wave">👋🏼</span></h1>
         <div class="softer"></div>
-        <div class="contentSafe">{{ content | safe }}</div>
+        <div class="contentSafe"><p>Ivan Romero Luque – Graphic Designer</p><p></p><p>Contact: </p><p>Phone: 684352864</p><p>Email: <a href="mailto:slysiivanromero@gmail.com">slysiivanromero@gmail.com</a></p><p>Skills: </p><ul><li>Adobe InDesign, Adobe Photoshop, Adobe Illustrator, Adobe Premiere, Adobe After Effects, Blender</li></ul><p>Strengths: </p><ul><li>Organized, punctual, team player, extroverted, responsible, perfectionist, creative</li></ul><p>Weaknesses: </p><ul><li>Demanding, nervous</li></ul><p>Education: </p><ul><li>2017-2020: Higher Degree in Graphic Design, Mateo Inurria School of Art</li></ul><ul><li>2015-2016: FP IGS Design and Editing of Printed and Multimedia Publications, IES El Tablero</li></ul><p>Experience: </p><ul><li>2021: Internship at MB Global</li></ul><ul><li>2017: Internship at Avoco Communication</li></ul><ul><li>2017-2018: Volunteer at the art event FACTOR WOW, Mateo Inurria School of Art</li></ul><ul><li>2018-2019: Volunteer at the art event FACTOR WOW, Mateo Inurria School of Art</li></ul><p>Extras: </p><ul><li>Willing to relocate</li></ul><ul><li>Available for immediate employment</li></ul><ul><li>Beneficiary of the Youth Guarantee program</li></ul><ul><li>Valid driver's license</li></ul></div>
     
 </main>
     </div>
     <!-- Remaining HTML content -->
 <video autoplay muted loop id="myVideo" >
-            <source src="{{ background_video }}" type="video/mp4">
+            <source src="https://player.vimeo.com/external/210741612.hd.mp4?s=236bbc8418aad6df5736c76a25add64ea81d7e8a&amp;profile_id=119&amp;oauth2_token_id=57447761" type="video/mp4">
             Your browser does not support HTML5 video.
         </video>
 </body>
@@ -74,9 +74,9 @@
 document.getElementById('theme-toggle').addEventListener('change', function(event) {
   var themeStylesheet = document.getElementById('theme-stylesheet');
   if (event.target.checked) {
-    themeStylesheet.href = "{{ url_for('static', filename='dark_style_web.css') }}"; // Dark Theme
+    themeStylesheet.href = "/static/dark_style_web.css"; // Dark Theme
   } else {
-    themeStylesheet.href = "{{ url_for('static', filename='style_web.css') }}"; // Light Theme
+    themeStylesheet.href = "/static/style_web.css"; // Light Theme
   }
 });
 

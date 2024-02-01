@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Resume</title>
-<link id="theme-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='style_web.css') }}">
+<link id="theme-stylesheet" rel="stylesheet" href="/static/style_web.css">
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,13 +40,13 @@
     <div class="bigBody">
     <header class="heroSection">
    <div id="avatar" class="avatar">
-    {% if avatar_url %}
-        <img src="{{ avatar_url }}" alt="User Avatar">
-    {% endif %}
+    
+        <img src="https://i.ibb.co/XpCCNBF/curly-hair-man.png" alt="User Avatar">
+    
 </div>
         <div class="videoOverlay">
             <!-- Hero section content -->
-            <h1>{{ header_title }}</h1>
+            <h1>I am a Talented and Detail-Oriented Graphic and Digital Designer with Extensive Adobe Skills</h1>
          <!-- Toggle Switch -->
 <label class="switch">
   <input type="checkbox" id="theme-toggle">
@@ -60,13 +60,13 @@
     <main class="resume-content">
         <h1>Hello <span class="wave">👋🏼</span></h1>
         <div class="softer"></div>
-        <div class="contentSafe">{{ content | safe }}</div>
+        <div class="contentSafe"><p>Ivn Romero Luque - Graphic Designer, Digital Designer</p><p>Contact: TEL 684352864 | Gmail: <a href="mailto:slysiivanromero@gmail.com">slysiivanromero@gmail.com</a></p><p>Skills: Adobe InDesign, Adobe Photoshop, Adobe Illustrator, Adobe Premiere, Adobe After Effects, Blender</p><p></p><p>Competencies: </p><ul><li>Organized, Punctual, Teamwork oriented</li></ul><ul><li>Outgoing, Responsible, Perfectionist, Creative</li></ul><ul><li>Drawbacks: Demanding, Nervous</li></ul><p></p><p>Education: </p><ul><li>2017-2020: Higher Degree in Graphic Design at Mateo Inurria School of Art</li></ul><ul><li>2015-2016: Vocational Training in Design and Editing of Printed and Multimedia Publications at El Tablero Institute</li></ul><p></p><p>Experience: </p><ul><li>2021: Internship at MB Global Company</li></ul><ul><li>2017: Internship at Avoco Communication Company</li></ul><ul><li>2017-2018: Volunteer at art events organized by the FACTOR WOW of Mateo Inurria School of Art</li></ul><ul><li>2018-2019: Volunteer at art events organized by the FACTOR WOW of Mateo Inurria School of Art</li></ul><p></p><p>Extras: </p><ul><li>Available for relocation</li></ul><ul><li>Immediate availability for employment</li></ul><ul><li>Beneficiary of the Youth Guarantee program</li></ul><ul><li>Driving license B</li></ul><p></p><p>Please note that the given content is already quite concise. However, I have made some adjustments to ensure a more professional tone and readability.</p></div>
     
 </main>
     </div>
     <!-- Remaining HTML content -->
-<video autoplay muted loop id="myVideo" >
-            <source src="{{ background_video }}" type="video/mp4">
+<video autoplay muted loop id="myVideo" style="width:100%; height: auto;">
+            <source src="https://player.vimeo.com/external/428429420.sd.mp4?s=19b5663ebf03e23fa2d39ae4945f08d7275fed5d&amp;profile_id=139&amp;oauth2_token_id=57447761" type="video/mp4">
             Your browser does not support HTML5 video.
         </video>
 </body>
@@ -74,9 +74,9 @@
 document.getElementById('theme-toggle').addEventListener('change', function(event) {
   var themeStylesheet = document.getElementById('theme-stylesheet');
   if (event.target.checked) {
-    themeStylesheet.href = "{{ url_for('static', filename='dark_style_web.css') }}"; // Dark Theme
+    themeStylesheet.href = "/static/dark_style_web.css"; // Dark Theme
   } else {
-    themeStylesheet.href = "{{ url_for('static', filename='style_web.css') }}"; // Light Theme
+    themeStylesheet.href = "/static/style_web.css"; // Light Theme
   }
 });
 

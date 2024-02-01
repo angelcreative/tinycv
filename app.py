@@ -248,6 +248,7 @@ def parse_links_and_emails(text):
 def generate_website():
     try:
         resume_file = request.files['resume_file']
+        avatar_url = request.form.get('avatar_url') 
         extracted_text = extract_text_from_pdf(resume_file)
         preprocessed_text = preprocess_text(extracted_text)
 
@@ -292,7 +293,12 @@ def generate_website():
         background_video = fetch_pexels_video()
 
         # Render the webpage with full structure
-        full_html_content = render_template('generated_website.html', header_title=header_title, content=structured_content, background_video=background_video)
+        
+        full_html_content = render_template('generated_website.html', 
+                                            header_title=header_title, 
+                                            content=structured_content, 
+                                            background_video=background_video,
+                                            avatar_url=avatar_url) 
 
         # Save the generated content to a file
         filepath = f"generated_websites/{slug}.html"

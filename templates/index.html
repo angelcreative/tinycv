@@ -54,8 +54,8 @@
 
 
             <form id="uploadForm" enctype="multipart/form-data">
-                <input type="file" name="file" id="file" disabled="" style="visibility: hidden; height:1px;">
-                <div id="uploadButton" class="upload-btn disabled" disabled="">Upload your resume <span class="arrowUp"><i class="fa fa-arrow-up" aria-hidden="true"></i>
+                <input type="file" name="file" id="file" disabled="" style="visibility: hidden; height:1px;" >
+                <div id="uploadButton" class="upload-btn disabled" disabled="" >Upload your resume <span class="arrowUp"><i class="fa fa-arrow-up" aria-hidden="true"></i>
 </span></div>
                 <p id="fileLoadedMessage" style="display:none;"></p>
                 <button type="submit" id="submitCVButton" disabled="" style="display:none;">Make my TinyCV! ✨</button>
@@ -228,7 +228,19 @@
 
         </div>
     </div>
-
+<div id="imageUploadDialog" style="display:none;">
+<button id="closeDialogButton" class="close-btn"><i class="fa fa-times-circle" aria-hidden="true"></i>
+</button>
+  <div class="image-upload">
+      <h4>Add your profile photo</h4>
+    <input type="file" name="imageFile" id="imageFile" style="visibility: hidden; height:1px;" >
+    <button id="imageUploadButton" class="upload-btn" >Upload your image<span class="arrowUp"><i class="fa fa-arrow-up" aria-hidden="true"></i>
+</span></button>
+<span id="uploadConfirmation" class="confirmation" style="display: none; ">Image uploaded successfully!</span>
+    <button id="launchWebSite" class="skip-btn">Launch website now 🚀</button>
+  </div>
+  <div id="avatar" class="avatar" style="display: none;"></div>
+</div>
 
    <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -353,29 +365,84 @@
      
 
 
-document.getElementById("generateWebsiteBtn").addEventListener("click", function() {
-    var formData = new FormData();
-    formData.append('resume_file', $('#file')[0].files[0]);
-    $('#loader').show(); // Show the loader
+document.getElementById("generateWebsiteBtn").addEventListener("click", function() 
+{
+    // Reset and show the image upload dialog
+    uploadedImageUrl = '';
+    $('#uploadConfirmation').hide();
+    $('#imageUploadDialog').show();
+});
 
-   $.ajax({
-    url: '/generate_website',
-    type: 'POST',
-    data: formData,
-    contentType: false,
-    processData: false,
-    success: function(response) {
-        $('#loader').hide(); // Hide the loader when new window opens
-        // Open the generated website URL in a new tab
-        window.open(response.url, '_blank');
-    },
-    error: function() {
-        $('#loader').hide(); // Also hide the loader in case of an error
-        alert('Error in generating website.');
+document.getElementById('closeDialogButton').addEventListener('click', function() {
+    // Hide the dialog
+    $('#imageUploadDialog').hide();
+});
+
+let uploadedImageUrl = ''; // Temporary variable to store the image URL
+
+document.getElementById('imageUploadButton').addEventListener('click', function() {
+    $('#imageFile').click(); // Trigger file input
+});
+
+document.getElementById('imageFile').addEventListener('change', function(event) {
+    // Handle file change and upload
+    const userImage = event.target.files[0];
+    if (userImage) {
+        const formData = new FormData();
+        formData.append('image', userImage);
+        formData.append('key', 'ba238be3f3764905b1bba03fc7a22e28'); // API key
+
+        fetch("https://api.imgbb.com/1/upload", {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.data && result.data.url) {
+                uploadedImageUrl = result.data.url;
+                 document.getElementById('uploadConfirmation').style.display = 'block';
+
+            }
+        })
+        .catch(error => console.error('Error:', error));
     }
 });
 
+document.getElementById('launchWebSite').addEventListener('click', function() {
+    // Generate website with the uploaded image
+    generateWebsite(uploadedImageUrl);
+    $('#imageUploadDialog').hide();
 });
+     
+     
+ 
+     function generateWebsite(avatarUrl = '') {
+    var formData = new FormData();
+    formData.append('resume_file', $('#file')[0].files[0]);
+    if (avatarUrl) {
+        formData.append('avatar_url', avatarUrl); // Add the avatar URL if available
+    }
+
+    $('#loader').show(); // Show the loader
+
+    $.ajax({
+        url: '/generate_website',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            $('#loader').hide(); // Hide the loader when new window opens
+            window.open(response.url, '_blank'); // Open the generated website URL in a new tab
+        },
+        error: function() {
+            $('#loader').hide(); // Also hide the loader in case of an error
+            alert('Error in generating website.');
+        }
+    });
+}
+
+     
      
      document.addEventListener('DOMContentLoaded', function() {
     const toggleButton = document.getElementById('theme-toggle');

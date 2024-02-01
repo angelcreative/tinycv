@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Resume</title>
-<link id="theme-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='style_web.css') }}">
+<link id="theme-stylesheet" rel="stylesheet" href="/static/style_web.css">
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,13 +40,13 @@
     <div class="bigBody">
     <header class="heroSection">
    <div id="avatar" class="avatar">
-    {% if avatar_url %}
-        <img src="{{ avatar_url }}" alt="User Avatar">
-    {% endif %}
+    
+        <img src="https://i.ibb.co/th5cf84/laura.png" alt="User Avatar">
+    
 </div>
         <div class="videoOverlay">
             <!-- Hero section content -->
-            <h1>{{ header_title }}</h1>
+            <h1>I am a dynamic Product Designer with expertise in user-centered design and eco-friendly practices.</h1>
          <!-- Toggle Switch -->
 <label class="switch">
   <input type="checkbox" id="theme-toggle">
@@ -60,13 +60,13 @@
     <main class="resume-content">
         <h1>Hello <span class="wave">👋🏼</span></h1>
         <div class="softer"></div>
-        <div class="contentSafe">{{ content | safe }}</div>
+        <div class="contentSafe"><p>Laura García is a passionate Product Designer from Spain with 5 years of experience in innovative design. She graduated from the prestigious Madrid Design School where she developed her skills in user-centered design. She then pursued a Masters in Advanced Design, specializing in sustainable product solutions.</p><p></p><p>Laura's expertise lies in 3D modeling, user research, and eco-friendly design practices. Fluent in both Spanish and English, she constantly explores new design frontiers.</p><p></p><h2>Here is a summarized version of Laura García's resume:</h2><p></p><ul><li>Name: Laura García</li></ul><ul><li>Profession: Product Designer</li></ul><ul><li>Experience: 5 years</li></ul><ul><li>Education: </li></ul><p>   - Madrid Design School: Bachelors in Product Design (2016)</p><p>   - Masters in Advanced Design: Specialization in Sustainable Product Solutions (2023)</p><ul><li>Professional Experience: </li></ul><p>   - Verde Design Studio (2018-2020): Junior Product Designer</p><p>      - Responsibilities: Leading sustainable design projects, 3D modeling, client consultations</p><p>   - Creativa Concepts (2021-Present): Senior Product Designer</p><p>      - Responsibilities: Project management, user research, design innovation</p><ul><li>Skills: </li></ul><p>   - Expertise in 3D modeling and user-centered design</p><p>   - Fluent in Spanish and English</p><p>   - Proficient in eco-friendly design practices</p><ul><li>Contact: </li></ul><p>   - LinkedIn: <a href="http://www.linkedin.com/in/lauragarciasanchezp">www.linkedin.com/in/lauragarciasanchezp</a> </p><p>   - Email: lauraprotonmailcom</p></div>
     
 </main>
     </div>
     <!-- Remaining HTML content -->
 <video autoplay muted loop id="myVideo" >
-            <source src="{{ background_video }}" type="video/mp4">
+            <source src="https://player.vimeo.com/external/210741585.sd.mp4?s=1991406e73365af03b25da89484a5237e5007535&amp;profile_id=164&amp;oauth2_token_id=57447761" type="video/mp4">
             Your browser does not support HTML5 video.
         </video>
 </body>
@@ -74,9 +74,9 @@
 document.getElementById('theme-toggle').addEventListener('change', function(event) {
   var themeStylesheet = document.getElementById('theme-stylesheet');
   if (event.target.checked) {
-    themeStylesheet.href = "{{ url_for('static', filename='dark_style_web.css') }}"; // Dark Theme
+    themeStylesheet.href = "/static/dark_style_web.css"; // Dark Theme
   } else {
-    themeStylesheet.href = "{{ url_for('static', filename='style_web.css') }}"; // Light Theme
+    themeStylesheet.href = "/static/style_web.css"; // Light Theme
   }
 });
 

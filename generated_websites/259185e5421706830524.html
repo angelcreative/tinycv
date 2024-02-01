@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Resume</title>
-<link id="theme-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='style_web.css') }}">
+<link id="theme-stylesheet" rel="stylesheet" href="/static/style_web.css">
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,13 +40,13 @@
     <div class="bigBody">
     <header class="heroSection">
    <div id="avatar" class="avatar">
-    {% if avatar_url %}
-        <img src="{{ avatar_url }}" alt="User Avatar">
-    {% endif %}
+    
+        <img src="https://i.ibb.co/th5cf84/laura.png" alt="User Avatar">
+    
 </div>
         <div class="videoOverlay">
             <!-- Hero section content -->
-            <h1>{{ header_title }}</h1>
+            <h1>I am a Passionate and Experienced Product Designer with Expertise in Sustainable Design Practices</h1>
          <!-- Toggle Switch -->
 <label class="switch">
   <input type="checkbox" id="theme-toggle">
@@ -60,13 +60,13 @@
     <main class="resume-content">
         <h1>Hello <span class="wave">👋🏼</span></h1>
         <div class="softer"></div>
-        <div class="contentSafe">{{ content | safe }}</div>
+        <div class="contentSafe"><p>Laura Garcia is a passionate and experienced Product Designer from Spain with 5 years of professional experience. She began her journey at Madrid Design School, where she focused on user-centered design. After completing her Bachelor's degree in Product Design, she pursued a Masters in Advanced Design with a specialization in sustainable product solutions. </p><p></p><p>Laura's expertise lies in 3D modeling, user research, and eco-friendly design practices. She is fluent in Spanish and English and is constantly exploring new design frontiers. </p><p></p><p>Laura's professional experience includes working at Verde Design Studio from 2018 to 2020, where she held the role of Junior Product Designer. Her responsibilities included leading sustainable design projects, 3D modeling, and client consultations. Currently, she is working at Creativa Concepts as a Senior Product Designer since 2021. In this role, she is responsible for project management, user research, and design innovation.</p><p></p><p>Laura's key skills include expertise in 3D modeling, user-centered design, and proficiency in eco-friendly design practices.</p><p></p><p>If you would like to get in touch with Laura, you can find her on LinkedIn at <a href="http://www.linkedin.com/in/lauragarciasanchezp">www.linkedin.com/in/lauragarciasanchezp</a> or contact her via email at lauraprotonmail.com.</p></div>
     
 </main>
     </div>
     <!-- Remaining HTML content -->
 <video autoplay muted loop id="myVideo" >
-            <source src="{{ background_video }}" type="video/mp4">
+            <source src="https://player.vimeo.com/external/210741585.sd.mp4?s=1991406e73365af03b25da89484a5237e5007535&amp;profile_id=164&amp;oauth2_token_id=57447761" type="video/mp4">
             Your browser does not support HTML5 video.
         </video>
 </body>
@@ -74,9 +74,9 @@
 document.getElementById('theme-toggle').addEventListener('change', function(event) {
   var themeStylesheet = document.getElementById('theme-stylesheet');
   if (event.target.checked) {
-    themeStylesheet.href = "{{ url_for('static', filename='dark_style_web.css') }}"; // Dark Theme
+    themeStylesheet.href = "/static/dark_style_web.css"; // Dark Theme
   } else {
-    themeStylesheet.href = "{{ url_for('static', filename='style_web.css') }}"; // Light Theme
+    themeStylesheet.href = "/static/style_web.css"; // Light Theme
   }
 });
 

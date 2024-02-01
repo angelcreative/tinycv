@@ -146,7 +146,8 @@ img.clearIcon {
     flex-direction: column;
 }
 
-#fileLoadedMessage {
+#fileLoadedMessage,
+.confirmation {
     text-align: center;
     margin: 0 auto;
     font-size: 12px;
@@ -637,9 +638,59 @@ aside.showCard {
     padding-top:10px;
 }
 
+
+.image-upload button.upload-btn {
+    background: none !important;
+    height: 50px;
+    width: 250px;
+    margin: 0;
+}
+
+.image-upload button.upload-btn:hover::after {
+   display:none
+}
+
+h4 {
+   margin: 20px 0 20px 0;
+}
+
+#imageUploadDialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #dae1ee;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 1px 1px 20px 10000px rgb(93 116 195 / 41%), 1px 1px 20px 10px rgb(93 116 195 / 41%);
+    z-index: 1000;
+    border-radius: 24px;
+}
+
+button#closeDialogButton {
+    background: none;
+    box-shadow: none;
+    color: #7e9bff;
+    position: absolute;
+    top: -20px;
+    right: 0;
+    width: fit-content;
+}
+
+button#imageUploadButton .arrowUp {
+    padding: 10px 12px;
+}
+
     @media only screen and (max-width: 1025px) {
    body {background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 90% 100% no-repeat;
           background-size: 230px;}
+}
+
+.image-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 

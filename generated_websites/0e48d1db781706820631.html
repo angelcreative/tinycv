@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Resume</title>
-<link id="theme-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='style_web.css') }}">
+<link id="theme-stylesheet" rel="stylesheet" href="/static/style_web.css">
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,13 +40,13 @@
     <div class="bigBody">
     <header class="heroSection">
    <div id="avatar" class="avatar">
-    {% if avatar_url %}
-        <img src="{{ avatar_url }}" alt="User Avatar">
-    {% endif %}
+    
+        <img src="https://i.ibb.co/Ptw6cbn/DALL-E-2024-02-01-14-10-36-Create-an-image-of-a-male-character-with-short-dark-hair-a-friendly-smile.png" alt="User Avatar">
+    
 </div>
         <div class="videoOverlay">
             <!-- Hero section content -->
-            <h1>{{ header_title }}</h1>
+            <h1>I am a Versatile Graphic Designer with Proficient Skills in Photoshop, Illustrator, and More</h1>
          <!-- Toggle Switch -->
 <label class="switch">
   <input type="checkbox" id="theme-toggle">
@@ -60,13 +60,13 @@
     <main class="resume-content">
         <h1>Hello <span class="wave">👋🏼</span></h1>
         <div class="softer"></div>
-        <div class="contentSafe">{{ content | safe }}</div>
+        <div class="contentSafe"><p>Carlos Revaliente López</p><p>30/06/1998 Hinojosa del Duque, Córdoba</p><p>Phone: 695 75 24 76</p><p>Email: heyrevalottigmail.com</p><p></p><h2>Summary:</h2><p>Flexible availability, self-owned computer, driving license B and A1, own car. </p><h2>Education:</h2><ul><li>IES Padre Juan Ruiz: Middle school (2010-2014)</li></ul><ul><li>Bachillerato (2014-2016)</li></ul><ul><li>Escuela de Arte Mateo Inurria: Higher Studies in Graphic Design (2017-2022)</li></ul><p></p><h2>Experience:</h2><ul><li>Graphic Designer at El Estilo Libre (2017-2020)</li></ul><ul><li>Collaboration with Urban Roosters as a Graphic Designer for Urban Roosters Design Army (2020-Present)</li></ul><p></p><h2>About Me:</h2><p>I consider myself an open-minded, educated, and empathetic person. I have the ability to adapt to any situation quickly and easily. I am a fast learner and possess a strong sense of commitment, loyalty, and justice.</p><p></p><h2>Additional Information:</h2><p>Curriculum Vitae: Photoshop, Illustrator, InDesign, After Effects, Premiere, Blender, Keyshot.</p></div>
     
 </main>
     </div>
     <!-- Remaining HTML content -->
-<video autoplay muted loop id="myVideo" >
-            <source src="{{ background_video }}" type="video/mp4">
+<video autoplay muted loop id="myVideo" style="width:100%; height: auto;">
+            <source src="default_video_url" type="video/mp4">
             Your browser does not support HTML5 video.
         </video>
 </body>
@@ -74,9 +74,9 @@
 document.getElementById('theme-toggle').addEventListener('change', function(event) {
   var themeStylesheet = document.getElementById('theme-stylesheet');
   if (event.target.checked) {
-    themeStylesheet.href = "{{ url_for('static', filename='dark_style_web.css') }}"; // Dark Theme
+    themeStylesheet.href = "/static/dark_style_web.css"; // Dark Theme
   } else {
-    themeStylesheet.href = "{{ url_for('static', filename='style_web.css') }}"; // Light Theme
+    themeStylesheet.href = "/static/style_web.css"; // Light Theme
   }
 });
 

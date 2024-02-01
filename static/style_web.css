@@ -30,7 +30,7 @@ body.dark-theme {
 }
 
 .heroSection {
-    background-size: cover;
+     background-size: cover;
     text-align: center;
     display: flex;
     flex-wrap: wrap;
@@ -38,7 +38,6 @@ body.dark-theme {
     align-content: center;
     justify-content: center;
     position: relative;
-    overflow: hidden;
     z-index: 5;
     width: 400px;
     margin: 216px -90px 0 0;
@@ -83,11 +82,13 @@ h2 {
 .resume-content h1, .resume-content h2 {color: #000000;font-size: 60px;}
 .resume-content h1 {
     font-family: 'Poppins', sans-serif;
-
+margin:0;
 }
+
 li {
     font-family: 'Montserrat', sans-serif;
     list-style-type: square;
+    line-height: 1.5;
 }
 .resume-content p {
     line-height: 1.8;
@@ -116,6 +117,7 @@ video {
     top: 0;
     left: 0;
         filter: blur(5px);
+    width: 100%;
 }
 
 .contentSafe {max-height: 70vh;overflow: scroll;}
@@ -145,16 +147,15 @@ footer {
 }
 
 .softer {
-    height: 260px;
+    height: 40px;
     display: block;
     position: absolute;
     width: 320px;
     background: linear-gradient(0deg, white, transparent);
     bottom: 0;
     z-index: 1;
-    top: 66vh;
+    top: 80vh;
 }
-
 footer a {
     color: #fff;
     text-decoration: none;
@@ -247,6 +248,23 @@ input:checked + .slider:before {
 }
 
 
+
+.avatar {
+height: 150px;
+    width: 150px;
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    margin-left: -25%;
+    z-index: 9;
+    border-radius: 50%;
+    background: #fff;
+    border: 10px solid white;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
 /* Rounded sliders */
 .slider.round {
   border-radius: 34px;
@@ -274,3 +292,26 @@ input:checked + .slider:before {
   transform-origin: 70% 70%;  /* Adjust as needed */
 }
 
+
+@media only screen and (max-width: 600px) {
+  .heroSection {
+   width: 100%;
+    margin: 216px 0 0 0;
+
+  }
+    
+    
+.resume-content {
+    width: 100%;
+    
+    padding: 20px;
+    
+    max-height: fit-content;
+    
+}
+    
+    
+.contentSafe {height: auto;overflow: scroll;}
+
+
+}
