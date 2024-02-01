@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Resume</title>
-<link id="theme-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='style_web.css') }}">
+<link id="theme-stylesheet" rel="stylesheet" href="/static/style_web.css">
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +42,7 @@
    
         <div class="videoOverlay">
             <!-- Hero section content -->
-            <h1>{{ header_title }}</h1>
+            <h1>I am a versatile and driven graphic designer with a passion for creating visually stunning designs.</h1>
          <!-- Toggle Switch -->
 <label class="switch">
   <input type="checkbox" id="theme-toggle">
@@ -54,15 +54,15 @@
         </div>
     </header>
     <main class="resume-content">
-        <h1>Hello <span class="wave">👋🏼</span></h1>
+        <h1>Hello 👋🏼</h1>
         <div class="softer"></div>
-        <div class="contentSafe">{{ content | safe }}</div>
+        <div class="contentSafe"><p>Carlos Revaliente López is a graphic designer based in Hinojosa del Duque, Cordoba. With a flexible schedule and own computer, Carlos possesses a B and A1 driving license as well as his own car. He completed his education at IES Padre Juan Ruiz, with ESO from 2010 to 2014 and Bachillerato from 2014 to 2016. He then pursued further studies at Escuela de Arte Mateo Inurria, where he earned a degree in Graphic Design from 2017 to 2022.</p><p></p><p>Since 2017, Carlos has been working as a graphic designer for the digital newspaper El Estilo Libre. From 2020 until present, he has collaborated with Urban Roosters in their Design Army as a graphic designer.</p><p></p><p>Carlos describes himself as a person who is open-minded, well-mannered, and empathetic. He possesses the ability to adapt to any situation and has a quick and easy learning capability. He also values commitment, loyalty, and justice.</p><p></p><p>Some additional information about Carlos includes his proficiency in software such as Photoshop, Illustrator, InDesign, After Effects, Premiere, Blender, and Keyshot.</p><p></p><p>This summarized content presents Carlos Revaliente López as a professional graphic designer from Hinojosa del Duque, Cordoba, who has demonstrated his skills and experience through his work with El Estilo Libre and Urban Roosters. He is described as a person with strong adaptability, quick learning ability, and high moral values.</p></div>
     
 </main>
     </div>
     <!-- Remaining HTML content -->
 <video autoplay muted loop id="myVideo" style="width:100%; height: auto;">
-            <source src="{{ background_video }}" type="video/mp4">
+            <source src="https://player.vimeo.com/external/174003112.hd.mp4?s=9c380d7ef6367969ca048d065a53adc1e105c9d9&amp;profile_id=174&amp;oauth2_token_id=57447761" type="video/mp4">
             Your browser does not support HTML5 video.
         </video>
 </body>
@@ -70,9 +70,9 @@
 document.getElementById('theme-toggle').addEventListener('change', function(event) {
   var themeStylesheet = document.getElementById('theme-stylesheet');
   if (event.target.checked) {
-    themeStylesheet.href = "{{ url_for('static', filename='dark_style_web.css') }}"; // Dark Theme
+    themeStylesheet.href = "/static/dark_style_web.css"; // Dark Theme
   } else {
-    themeStylesheet.href = "{{ url_for('static', filename='style_web.css') }}"; // Light Theme
+    themeStylesheet.href = "/static/style_web.css"; // Light Theme
   }
 });
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Resume</title>
-<link id="theme-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='style_web.css') }}">
+<link id="theme-stylesheet" rel="stylesheet" type="text/css" href="/static/style_web.css">
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,40 +42,40 @@
    
         <div class="videoOverlay">
             <!-- Hero section content -->
-            <h1>{{ header_title }}</h1>
-         <!-- Toggle Switch -->
-<label class="switch">
-  <input type="checkbox" id="theme-toggle">
-  <span class="slider round"></span>
-</label>
-
+            <h1>I am a Creative and Detail-Oriented Graphic Designer | Digital Designer with Expertise in Adobe Programs and Strong Teamwork Skills</h1>
+           <button id="theme-toggle">🌞</button>
 
 
         </div>
     </header>
     <main class="resume-content">
-        <h1>Hello <span class="wave">👋🏼</span></h1>
+        <h1>Hello 👋🏼</h1>
         <div class="softer"></div>
-        <div class="contentSafe">{{ content | safe }}</div>
+        <div class="contentSafe"><p>Ivan Romero Luque </p><p></p><p>Graphic Designer | Digital Designer </p><p></p><p>Contact: </p><p>Telephone: 684352864 </p><p>Email: slysiivanromero@gmailcom </p><p>Skills: </p><ul><li>Proficient in Adobe InDesign, Adobe Photoshop, Adobe Illustrator, Adobe Premiere, Adobe After Effects, and Blender </li></ul><p></p><p>Competencies: </p><ul><li>Organized, punctual, and able to work well in a team </li></ul><ul><li>Outgoing and responsible, with a strong attention to detail </li></ul><ul><li>Highly creative </li></ul><p></p><p>Education: </p><p>2017 - 2020: </p><ul><li>Completed a higher degree in Graphic Design at Mateo Inurria Art School </li></ul><p></p><p>2015 - 2016: </p><ul><li>Completed a vocational training program in Design and Editing of Printed and Multimedia Publications at IES El Tablero </li></ul><p></p><p>Experience: </p><p>2021: </p><ul><li>Completed an internship at MB Global company </li></ul><p></p><p>2017: </p><ul><li>Completed an internship at Avoco Communication company </li></ul><p></p><p>2017 - 2018: </p><ul><li>Volunteered at the Factor WOW art event at Mateo Inurria Art School </li></ul><p></p><p>2018 - 2019: </p><ul><li>Volunteered at the Factor WOW art event at Mateo Inurria Art School </li></ul><p></p><p>Additional Information: </p><ul><li>Willing to relocate </li></ul><ul><li>Available for immediate employment </li></ul><ul><li>Registered as a beneficiary of the Youth Guarantee system </li></ul><ul><li>Holds a driver's license</li></ul></div>
     
 </main>
     </div>
     <!-- Remaining HTML content -->
 <video autoplay muted loop id="myVideo" style="width:100%; height: auto;">
-            <source src="{{ background_video }}" type="video/mp4">
+            <source src="https://player.vimeo.com/external/428429420.sd.mp4?s=19b5663ebf03e23fa2d39ae4945f08d7275fed5d&amp;profile_id=139&amp;oauth2_token_id=57447761" type="video/mp4">
             Your browser does not support HTML5 video.
         </video>
 </body>
 <script>
-document.getElementById('theme-toggle').addEventListener('change', function(event) {
-  var themeStylesheet = document.getElementById('theme-stylesheet');
-  if (event.target.checked) {
-    themeStylesheet.href = "{{ url_for('static', filename='dark_style_web.css') }}"; // Dark Theme
-  } else {
-    themeStylesheet.href = "{{ url_for('static', filename='style_web.css') }}"; // Light Theme
-  }
-});
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleButton = document.getElementById('theme-toggle');
+    const themeStylesheet = document.getElementById('theme-stylesheet');
 
+    toggleButton.addEventListener('click', function() {
+        if (themeStylesheet.getAttribute('href').includes('style_web.css')) {
+            themeStylesheet.setAttribute('href', '/static/dark_style_web.css');
+            toggleButton.textContent = '🌚'; // Change to dark theme emoji
+        } else {
+            themeStylesheet.setAttribute('href', '/static/style_web.css');
+            toggleButton.textContent = '🌞'; // Change to light theme emoji
+        }
+    });
+});
 </script>
 
 </html>

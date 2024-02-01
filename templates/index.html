@@ -63,7 +63,9 @@
                
             </form>
 
-                <button id="generateWebsiteBtn">Make my TinyWeb</button>
+                <button id="generateWebsiteBtn" style="background: none;
+    color: #7e9bff;
+    border: 1px solid #7e9bff;">Make my TinyWeb</button>
 
  <p class="motto">Perfectly crafted for sharing on social media platforms, it's the ideal way to showcase your professional profile with ease and style.</p>
                 <div class="logos">
@@ -373,6 +375,48 @@ document.getElementById("generateWebsiteBtn").addEventListener("click", function
     }
 });
 
+});
+     
+     document.addEventListener('DOMContentLoaded', function() {
+    const toggleButton = document.getElementById('theme-toggle');
+
+    toggleButton.addEventListener('click', function() {
+        const body = document.body;
+        const resumeContent = document.querySelector('.resume-content');
+        const h1Elements = document.querySelectorAll('h1');
+        const pElements = document.querySelectorAll('.resume-content p');
+        const videoOverlay = document.querySelector('.videoOverlay');
+        const softerElements = document.querySelectorAll('.softer');
+
+        // Toggle body theme
+        body.classList.toggle('dark-theme');
+
+        // Toggle resume content theme
+        if (resumeContent) {
+            resumeContent.classList.toggle('dark-background');
+            resumeContent.classList.toggle('dark-color');
+        }
+
+        // Toggle h1 color
+        h1Elements.forEach(function(h1) {
+            h1.classList.toggle('dark-h1-color');
+        });
+
+        // Toggle paragraph color
+        pElements.forEach(function(p) {
+            p.classList.toggle('dark-p-color');
+        });
+
+        // Toggle video overlay background
+        if (videoOverlay) {
+            videoOverlay.classList.toggle('dark-overlay-background');
+        }
+
+        // Toggle softer background
+        softerElements.forEach(function(softer) {
+            softer.classList.toggle('dark-softer-background');
+        });
+    });
 });
 
 
