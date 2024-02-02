@@ -710,6 +710,8 @@ button#imageUploadButton .arrowUp {
     justify-content: center;
     margin-top:80px;} 
     
+    .slider {display: none}
+    
     #loader {
     
         bottom: -36px;}
