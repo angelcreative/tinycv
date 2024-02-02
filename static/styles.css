@@ -68,9 +68,8 @@ padding-top: 38px;
 
 
 .header span {
-    background: #6e88e5;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #6e88e5;
+   
     font-size: 20px;
     line-height: 1;
     margin: 10px auto;
@@ -683,6 +682,7 @@ h4 {
     box-shadow: 1px 1px 20px 10000px rgb(93 116 195 / 41%), 1px 1px 20px 10px rgb(93 116 195 / 41%);
     z-index: 1000;
     border-radius: 24px;
+    height: 350px
 }
 
 button#closeDialogButton {
@@ -740,6 +740,25 @@ input::placeholder {
     color: #566bb594;
 }
 
+
+@keyframes wave-animation {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-10deg); }
+  40% { transform: rotate(10deg); }
+  60% { transform: rotate(-10deg); }
+  80% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.wave {
+    display: inline-block !important;
+    animation-name: wave-animation;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    transform-origin: 70% 70%;
+    width: auto !important;
+    font-size: 40px !important;
+}
     @media only screen and (max-width: 1025px) {
    body {background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 90% 100% no-repeat;
           background-size: 230px;}
@@ -762,13 +781,12 @@ input::placeholder {
     padding-left: 0px;
   }
     body {
-   background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 130% 100% no-repeat;
-    background-size: 200px;
+   background: #dae1ee;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     margin-top:80px;} 
     
     .slider {display: none}
@@ -779,13 +797,25 @@ input::placeholder {
     
     .headerArrow {
 
-    top: 290px;
-    right: 30px;
+    top: 160px;
+    right: -10px;
    }
     
     .logos {
    
     margin-bottom: 40px
+        
 }
     
+    .header span {
+    color: #6e88e5;
+    
+    font-size: 20px;
+    line-height: 1;
+    margin: 10px auto;
+    display: block;
+    padding-bottom: 12px;
+    width: 80%;
+}
+}
 

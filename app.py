@@ -207,7 +207,7 @@ def fetch_pexels_video():
         video_url = video_data['video_files'][0]['link']  # Choose appropriate quality
         return video_url
     else:
-        return 'default_video_url'  # Provide a default video URL in case of failure
+        return 'https://i.vimeocdn.com/video/829185695-1700d0e1949013fd6b8b51b58ff8f59c7e6fbea01104a0e7eef746666a7c7fe9-d'  # Provide a default video URL in case of failure
 
 def parse_website_content(content):
     structured_content = ""
@@ -303,12 +303,12 @@ def generate_website():
                                             avatar_url=avatar_url) 
 
         # Save the generated content to a file
-        filepath = f"generated_websites/{slug}.html"
+        filepath = f"my_tiny_website/{slug}.html"
         with open(filepath, "w") as file:
             file.write(full_html_content)
 
         # Construct the URL for the generated website (not using 'static')
-        generated_url = f"{request.url_root}generated_websites/{slug}"
+        generated_url = f"{request.url_root}my_tiny_website/{slug}"
 
         # Return the URL in the response
         return jsonify({"url": generated_url})
@@ -318,10 +318,10 @@ def generate_website():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route('/generated_websites/<slug>')
+@app.route('/my_tiny_website/<slug>')
 def generated_website(slug):
     try:
-        with open(f"generated_websites/{slug}.html", "r") as file:
+        with open(f"my_tiny_website/{slug}.html", "r") as file:
             content = file.read()
         return content
     except IOError:
