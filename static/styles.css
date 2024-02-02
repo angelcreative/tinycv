@@ -163,7 +163,7 @@ button {
     margin-top: 20px;
     color: white;
     cursor: pointer;
-    width: 250px;
+    width: 100%;
     box-shadow: 7px 3px 20px #A7B2C6, -3px -4px 18px #fff;
     border:none;
     transition: background 300ms ease-in-out;
@@ -640,10 +640,28 @@ aside.showCard {
 
 
 .image-upload button.upload-btn {
-    background: none !important;
-    height: 50px;
-    width: 250px;
-    margin: 0;
+    height: 2px;
+    background: #dae1ee;
+    background-color: #dae1ee;
+    color: #8096e6;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: inset 0px 0px 15px rgb(193 202 219);
+    border: 1px solid #e8f0fd;
+    border-top-color: #dae1ee;
+    border-right-color: #e8f0fd87;
+    border-left-color: #e8f0fd87;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 12px;
+    width: auto;
+    justify-content: flex-start;
+    font-size: 14px;
+    transition: background 300ms ease-in;
+    text-align: left;
+    margin: 0 0 20px 0;
+    padding: 20px;
 }
 
 .image-upload button.upload-btn:hover::after {
@@ -670,7 +688,7 @@ h4 {
 button#closeDialogButton {
     background: none;
     box-shadow: none;
-    color: #7e9bff;
+    color: #93a0b7;
     position: absolute;
     top: -20px;
     right: 0;
@@ -681,6 +699,47 @@ button#imageUploadButton .arrowUp {
     padding: 10px 12px;
 }
 
+input::placeholder {
+    color:#8096e6
+}
+
+.fakeInput {
+    background: #dae1ee;
+    background-color: #dae1ee;
+    color: #8096e6;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: inset 0px 0px 15px rgb(193 202 219);
+    border: 1px solid #e8f0fd;
+    border-top-color: #dae1ee;
+    border-right-color: #e8f0fd87;
+    border-left-color: #e8f0fd87;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 12px;
+    width: auto;
+    justify-content: flex-start;
+    font-size: 14px;
+    transition: background 300ms ease-in;
+    text-align: left;
+    margin: 0 0 20px 0;
+    padding: 0 0 0 20px;
+}
+
+.fakeInput input {
+    border: none;
+    background: transparent;
+    padding: 12px 20px 12px 0;
+    width: 100%;
+    font-family: courier;
+    font-size: 14px;
+}
+
+.image-upload i {
+    color: #566bb594;
+}
+
     @media only screen and (max-width: 1025px) {
    body {background: #dae1ee url(https://i.ibb.co/FwsMMrG/3d-hands-fun-and-wild-brown-skin-pinching-hand.png) 90% 100% no-repeat;
           background-size: 230px;}
@@ -689,8 +748,10 @@ button#imageUploadButton .arrowUp {
 .image-upload {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-between;
+    align-items: stretch;
+    height: 260px;
+    padding-bottom: 12px;
 }
 
 

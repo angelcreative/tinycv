@@ -228,17 +228,22 @@
 
         </div>
     </div>
-<div id="imageUploadDialog" style="display:none;">
+<div id="imageUploadDialog" style="display: none">
 <button id="closeDialogButton" class="close-btn"><i class="fa fa-times-circle" aria-hidden="true"></i>
 </button>
   <div class="image-upload">
-      <h4>Add your profile photo</h4>
-    <input type="file" name="imageFile" id="imageFile" style="visibility: hidden; height:1px;" >
-    <button id="imageUploadButton" class="upload-btn" >Upload your image<span class="arrowUp"><i class="fa fa-arrow-up" aria-hidden="true"></i>
-</span></button>
-<span id="uploadConfirmation" class="confirmation" style="display: none; ">Image uploaded successfully!</span>
-    <button id="launchWebSite" class="skip-btn">Launch website now 🚀</button>
-  </div>
+    <h4>Personalize your Ai website</h4>
+    <div class="fakeInput"> <i class="fa fa-pencil" aria-hidden="true"></i>
+<input type="text" id="nameCV" placeholder="Enter your name">
+</div>
+    <input type="file" name="imageFile" id="imageFile" style="visibility: hidden; height:1px;">
+    <button id="imageUploadButton" class="upload-btn"><i class="fa fa-camera" aria-hidden="true"></i>Upload your headshot
+</button>
+    <span id="uploadConfirmation" class="confirmation" style="display: none;">Image uploaded successfully!</span>
+    <button id="launchWebSite" class="skip-btn">
+Launch Ai website ✨</button>
+</div>
+
   <div id="avatar" class="avatar" style="display: none;"></div>
 </div>
 
@@ -416,8 +421,10 @@ document.getElementById('launchWebSite').addEventListener('click', function() {
      
      
  
-     function generateWebsite(avatarUrl = '') {
+function generateWebsite(avatarUrl = '', nameCV = '') {
+    
     var formData = new FormData();
+    formData.append('nameCV', nameCV); // Add the name
     formData.append('resume_file', $('#file')[0].files[0]);
     if (avatarUrl) {
         formData.append('avatar_url', avatarUrl); // Add the avatar URL if available

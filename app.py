@@ -275,7 +275,9 @@ def generate_website():
         structured_content = parse_website_content(processed_content)
     
         # Generate AI-based header title
-        header_prompt = f"Generate a dynamic header title starting with 'I am a' based on the following resume content:\n\n{processed_content}"
+        nameCV = request.form.get('nameCV', '')
+        header_prompt = f"Generate a dynamic header title starting with 'I am {nameCV}' based on the following resume content:\n\n{processed_content}"
+    
         header_response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
